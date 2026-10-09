@@ -44,9 +44,13 @@ a{color:inherit}
 .lnk{background:none;border:none;color:#fff;font:600 14px var(--body);text-decoration:underline;padding:4px 0;display:block}
 
 /* ---------- Zona principal ---------- */
-.wrap{margin-left:var(--side)}
+.wrap{margin-left:var(--side);transition:margin-left .25s}
+@media (min-width:981px){
+  body.menu-off .side{transform:translateX(-100%)}
+  body.menu-off .wrap{margin-left:0}
+}
 .top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:12px 32px;display:flex;align-items:center;gap:14px}
-.burger{display:none;background:var(--navy);color:#fff;border:none;border-radius:10px;width:42px;height:42px;font-size:20px}
+.burger{display:block;flex:none;background:var(--navy);color:#fff;border:none;border-radius:10px;width:42px;height:42px;font-size:20px}
 .quick{display:flex;gap:8px;flex-wrap:wrap;flex:1;align-items:center}
 .quick .lab{font-size:13.5px;color:var(--muted);font-weight:600;margin-right:4px}
 .qa{display:inline-flex;align-items:center;gap:6px;background:var(--paper);border:1px solid var(--line);color:var(--ink);text-decoration:none;font:600 14px var(--body);padding:7px 14px;border-radius:999px;transition:all .2s}
@@ -132,6 +136,108 @@ footer b{color:var(--ink)}
 .urow{flex-wrap:wrap}
 .ulist{max-height:48vh;overflow:auto}
 
+/* ---------- 3 columnas: menú | contenido | fechas ---------- */
+.cols{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:28px;align-items:start;padding:34px 32px 20px;max-width:1500px}
+.cols.solo{grid-template-columns:minmax(0,1fr)}
+.cols .page{padding:0;max-width:none}
+.rcol{position:sticky;top:78px;display:flex;flex-direction:column;gap:16px;max-height:calc(100vh - 96px);overflow:auto}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px}
+.card h3{font-family:var(--head);font-size:19px;font-weight:700;margin-bottom:10px}
+.card input[type=date],.card select{width:100%;font:500 14.5px var(--body);padding:9px 11px;border:1.5px solid var(--line);border-radius:10px;background:var(--paper)}
+.dias{display:flex;flex-direction:column;gap:4px;margin-top:10px;max-height:46vh;overflow:auto}
+.dia{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;background:none;border:1px solid transparent;border-radius:10px;padding:8px 10px;font:600 14px var(--body);color:var(--ink);text-align:left}
+.dia:hover{background:var(--paper)}
+.dia.on{background:var(--teal);color:#fff}
+.dia em{font-style:normal;font-size:12.5px;background:var(--teal-soft);color:var(--teal);border-radius:999px;padding:1px 9px}
+.dia.on em{background:rgba(255,255,255,.25);color:#fff}
+.filtros{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:18px}
+.filtros .search{flex:1;min-width:220px}
+.filtros select{font:600 14.5px var(--body);padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;background:#fff}
+.chipf{display:inline-flex;align-items:center;gap:6px;background:var(--amber-soft);border-radius:999px;padding:5px 12px;font-size:13.5px;font-weight:600}
+.chipf button{background:none;border:none;font-weight:800;color:var(--red)}
+.feed{display:flex;flex-direction:column;gap:18px}
+.nw{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:10px}
+.nw.urg{border-left:6px solid var(--amber)}
+.nw h3{font-family:var(--head);font-size:25px;line-height:1.2;font-weight:700}
+.nw p{white-space:pre-line}
+.tags{display:flex;gap:8px;flex-wrap:wrap}
+.tag.cat{background:var(--navy);color:#fff}
+.hora{font-size:13.5px;color:var(--muted);display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.vb{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding-top:12px;border-top:1px dashed var(--line);margin-top:4px}
+.vb .btn.ok{background:#E3F6EC;color:#177A48;border-color:#B8E5CC}
+.vb .btn.ok:hover{background:#177A48;color:#fff;border-color:#177A48}
+.vb .btn.no{background:var(--red-soft);color:var(--red);border-color:#F0C4C4}
+.vb .btn.no:hover{background:var(--red);color:#fff;border-color:var(--red)}
+.est{font-weight:700;font-size:14px;padding:6px 14px;border-radius:999px}
+.est.ok{background:#E3F6EC;color:#177A48}
+.est.duda{background:var(--red-soft);color:var(--red)}
+.est.pend{background:var(--paper);color:var(--muted)}
+.qa-thread{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.q{background:var(--paper);border-radius:12px;padding:12px 14px;font-size:14.5px}
+.q b{display:block;font-size:13px;color:var(--muted);margin-bottom:2px}
+.q .r{margin-top:8px;padding:10px 12px;background:#fff;border-left:4px solid var(--teal);border-radius:8px}
+.q .nuevo{background:var(--amber);color:var(--navy);font-size:11.5px;font-weight:800;border-radius:999px;padding:1px 8px;margin-left:6px}
+.aviso{background:var(--amber-soft);border-radius:14px;padding:12px 16px;margin-bottom:18px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;font-weight:600}
+.resumen{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:14px}
+.bdg{font-style:normal;background:var(--amber);color:var(--navy);font-size:12px;font-weight:800;border-radius:999px;padding:1px 8px;margin-left:auto}
+.estado-act{margin:0 0 14px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.07);font-size:12.5px;color:#C6D2EC;line-height:1.4}
+.estado-act b{color:#fff;display:block;font-size:13px}
+
+/* ---------- Panel de indicadores ---------- */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:22px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+.kpi span{font-size:13.5px;color:var(--muted);font-weight:600}
+.kpi b{display:block;font-family:var(--head);font-size:34px;line-height:1.1;margin-top:4px}
+.kpi small{color:var(--muted);font-size:12.5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+.bar{display:flex;align-items:center;gap:10px;margin:8px 0;font-size:14px}
+.bar .nm{width:130px;flex:none;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar .tr{flex:1;height:18px;background:var(--paper);border-radius:9px;overflow:hidden;display:flex}
+.bar .tr i{display:block;height:100%}
+.bar .vl{width:84px;flex:none;text-align:right;color:var(--muted);font-size:13px}
+.c-ok{background:#2FB874}.c-duda{background:var(--red)}.c-pend{background:#C9D2E0}.c-teal{background:var(--teal)}
+.donut{width:150px;height:150px;border-radius:50%;flex:none;position:relative}
+.donut::after{content:"";position:absolute;inset:26px;background:#fff;border-radius:50%}
+.donut b{position:absolute;inset:0;display:grid;place-items:center;z-index:1;font-family:var(--head);font-size:26px}
+.leyenda{display:flex;flex-direction:column;gap:6px;font-size:14px}
+.leyenda i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:8px}
+.dias14{display:flex;align-items:flex-end;gap:6px;height:130px;margin-top:8px}
+.dias14 div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;height:100%;font-size:11px;color:var(--muted)}
+.dias14 i{width:100%;background:var(--teal);border-radius:5px 5px 0 0;min-height:2px}
+table.tb{width:100%;border-collapse:collapse;font-size:14px}
+table.tb th{text-align:left;font-size:12.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;padding:8px 10px;border-bottom:2px solid var(--line)}
+table.tb td{padding:9px 10px;border-bottom:1px solid var(--line)}
+.scroll{max-height:420px;overflow:auto}
+.mini-bar{display:inline-block;width:80px;height:8px;border-radius:4px;background:var(--paper);vertical-align:middle;margin-right:8px;overflow:hidden}
+.mini-bar i{display:block;height:100%;background:#2FB874}
+.listas{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.listas h4{font-size:14px;margin-bottom:6px}
+.listas ul{list-style:none;font-size:13.5px;max-height:260px;overflow:auto;border:1px solid var(--line);border-radius:10px;padding:6px 10px;background:#fff}
+.listas li{padding:3px 0;border-bottom:1px solid var(--paper)}
+
+/* ---------- Obligatorias, adjuntos y panel de alerta ---------- */
+.tag.oblig{background:var(--red);color:#fff}
+.tag.plano{background:var(--paper);color:var(--muted)}
+.adj{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.adj img{display:block;max-width:200px;max-height:150px;border-radius:10px;border:1px solid var(--line);object-fit:cover}
+.chipa{display:inline-flex;align-items:center;gap:6px;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font:600 13.5px var(--body);text-decoration:none;color:var(--ink);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chipa:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
+.dlg fieldset.chks{border:1.5px solid var(--line);border-radius:10px;padding:10px 14px;display:flex;flex-direction:column;gap:6px}
+.dlg fieldset.chks legend{font-weight:600;font-size:14.5px;padding:0 6px}
+.dlg fieldset.chks .chk{font-weight:500}
+#alerta{width:min(780px,96vw);max-height:92vh;overflow:auto;border-radius:20px}
+#alerta::backdrop{background:rgba(14,26,54,.9);backdrop-filter:blur(6px)}
+.alt{padding:26px;display:flex;flex-direction:column;gap:16px}
+.altcab{display:flex;gap:14px;align-items:center;background:var(--amber-soft);border-radius:14px;padding:14px 18px}
+.altcab h3{font-family:var(--head);font-size:24px;line-height:1.2}
+.altcab p{color:var(--muted);font-size:14.5px}
+.altico{font-size:34px}
+.altn{border:1px solid var(--line);border-left:6px solid var(--red);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.altn h4{font-family:var(--head);font-size:22px;line-height:1.2}
+.altn p{white-space:pre-line}
+.altpie{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-size:13.5px;color:var(--muted)}
+.altpie .lnk{color:var(--muted)}
+
 /* ---------- Pantalla de ingreso ---------- */
 .gate{min-height:100vh;display:grid;align-content:center;justify-items:center;gap:18px;padding:24px;background:var(--navy)}
 body:not(.locked) .gate{display:none}
@@ -173,8 +279,12 @@ dialog::backdrop{background:rgba(14,26,54,.7);backdrop-filter:blur(4px)}
   .side{transform:translateX(-100%)}
   .side.open{transform:none}
   .wrap{margin-left:0}
-  .burger{display:block}
   .top{padding:12px 16px}
+  .cols{grid-template-columns:minmax(0,1fr)!important}
+  .rcol{position:static!important;max-height:none!important}
+  .listas{grid-template-columns:1fr!important}
+  .kpis{grid-template-columns:repeat(2,1fr)!important}
+  .two{grid-template-columns:1fr!important}
   .page{padding:26px 16px}
   .news{grid-template-columns:1fr}
   footer{padding:22px 16px}
@@ -209,12 +319,15 @@ dialog::backdrop{background:rgba(14,26,54,.7);backdrop-filter:blur(4px)}
 
 <div class="wrap">
   <header class="top">
-    <button class="burger" id="burger" aria-label="Abrir menú">☰</button>
+    <button class="burger" id="burger" aria-label="Mostrar u ocultar el menú" title="Mostrar u ocultar el menú">☰</button>
     <div class="quick" id="quick"></div>
     <div id="auth"></div>
   </header>
   <div id="ticker"></div>
-  <main class="page" id="main"></main>
+  <div class="cols" id="cols">
+    <main class="page" id="main"></main>
+    <aside class="rcol" id="rcol" aria-label="Boletines por fecha"></aside>
+  </div>
   <footer>
     <span>© 2026 <b>Jhonatan Morzán</b> · Todos los derechos reservados</span>
     <span>By Jhonatan Morzán · Prohibida su copia o reproducción sin autorización</span>
@@ -222,6 +335,7 @@ dialog::backdrop{background:rgba(14,26,54,.7);backdrop-filter:blur(4px)}
 </div>
 
 <dialog id="dlg"></dialog>
+<dialog id="alerta" aria-label="Noticias pendientes de visto bueno"></dialog>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -246,8 +360,20 @@ const S = {
   cargando: true, error: '',
   uid: null, codigo: '', nombre: '', rol: null, vista: 'inicio',
   accesos: [], menu: [], noticias: [], materiales: [], bloques: [],
+  vistos: [], preguntas: [], perfiles: [], estado: null, omisiones: [], hechas: new Set(),
+  f: {q:'', cat:'', dia:''},      // filtros de noticias
+  p: {dias:'30', cat:'', noticia:''}, // filtros del panel
   abiertos: {}
 };
+const CATS = ['Activaciones','Validaciones','Programación','Seguimiento'];
+const COL_CAT = {'Activaciones':'#0B8F8A','Validaciones':'#6C5CE7','Programación':'#F5A524','Seguimiento':'#D63B3B'};
+const norm = t => String(t??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+const diaKey = iso => { const d=new Date(iso); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
+const fechaHora = iso => iso ? new Date(iso).toLocaleString('es-PE',{day:'numeric',month:'short',year:'numeric',hour:'numeric',minute:'2-digit',hour12:true}) : '';
+const diaLargo = k => new Date(k+'T12:00:00').toLocaleDateString('es-PE',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+const quien = u => (u.nombre ? u.nombre+' · ' : '') + (u.codigo||'');
+const miVisto = nid => S.vistos.find(v => v.noticia_id===nid && v.user_id===S.uid);
+const misPreg = nid => S.preguntas.filter(p => p.noticia_id===nid);
 const $ = s => document.querySelector(s);
 const esc = t => String(t ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 const fecha = f => f ? new Date(String(f).slice(0,10)+'T12:00:00').toLocaleDateString('es-PE',{day:'numeric',month:'short',year:'numeric'}) : '';
@@ -278,17 +404,23 @@ async function mut(consulta){
 /* ===== Carga de datos ===== */
 async function cargar(){
   const ord = (t,c) => sb.from(t).select('*').order(c,{ascending:true});
-  const [a,g,t,n,m,b] = await Promise.all([
+  const [a,g,t,n,m,b,vi,pr,es,pf,om] = await Promise.all([
     ord('accesos','orden'), ord('grupos','orden'), ord('temas','orden'),
-    sb.from('noticias').select('*').order('fecha',{ascending:false}).order('id',{ascending:false}),
+    sb.from('noticias').select('*').order('creado',{ascending:false}).order('id',{ascending:false}),
     sb.from('materiales').select('*').order('fecha',{ascending:false}).order('id',{ascending:false}),
-    ord('bloques','orden')
+    ord('bloques','orden'),
+    sb.from('noticia_vistos').select('*'),
+    sb.from('noticia_preguntas').select('*').order('creado',{ascending:true}),
+    sb.from('estado_sitio').select('*').eq('id',1).maybeSingle(),
+    esF() ? sb.from('perfiles').select('id,codigo,nombre,rol,creado') : Promise.resolve({data:[]}),
+    sb.from('noticia_omisiones').select('*')
   ]);
-  const fallo = [a,g,t,n,m,b].find(r=>r.error);
+  const fallo = [a,g,t,n,m,b,vi,pr,es,pf,om].find(r=>r.error);
   if(fallo) throw fallo.error;
   S.accesos = a.data; S.noticias = n.data; S.materiales = m.data; S.bloques = b.data;
+  S.vistos = vi.data; S.preguntas = pr.data; S.estado = es.data; S.perfiles = pf.data; S.omisiones = om.data;
   S.menu = g.data.map(x => ({...x, subs: t.data.filter(y=>y.grupo_id===x.id).map(y=>({id:y.id,nombre:y.nombre,desc:y.descr||'',orden:y.orden}))}));
-  if(!temaDe(S.vista)) S.vista = 'inicio';
+  if(!temaDe(S.vista) && !(S.vista==='panel' && esF())) S.vista = 'inicio';
 }
 async function cargarPerfil(){
   const {data} = await sb.from('perfiles').select('rol,codigo,nombre').eq('id', S.uid).maybeSingle();
@@ -298,13 +430,18 @@ async function refrescar(){ await cargar(); dibujar(); }
 
 /* ===== Dibujo de la página ===== */
 function dibujarMenu(){
-  $('#nav').innerHTML = `<button class="item ${S.vista==='inicio'?'on':''}" data-go="inicio">Inicio y noticias</button>` +
+  const nuevas = S.preguntas.filter(p=>p.user_id===S.uid && p.respuesta && !p.leida).length;
+  const pend = S.preguntas.filter(p=>!p.respuesta).length;
+  const insignia = esF() ? (pend?` <em class="bdg">${pend}</em>`:'') : (nuevas?` <em class="bdg">${nuevas}</em>`:'');
+  $('#nav').innerHTML = `<button class="item ${S.vista==='inicio'?'on':''}" data-go="inicio">Inicio y noticias${insignia}</button>` +
+    (esF() ? `<button class="item ${S.vista==='panel'?'on':''}" data-go="panel">Panel de indicadores</button>` : '') +
     S.menu.map(g => `
       <button class="grp" data-grp="${esc(g.id)}" aria-expanded="${!!S.abiertos[g.id]}">${esc(g.nombre)}${chev}</button>
       <div class="subs ${S.abiertos[g.id]?'open':''}">${g.subs.map(s=>`<button class="item ${S.vista===s.id?'on':''}" data-go="${esc(s.id)}">${esc(s.nombre)}</button>`).join('')}
       ${esF()?`<div class="mini"><button data-act="add-tema" data-id="${esc(g.id)}">+ Tema</button><button data-act="edit-grp" data-id="${esc(g.id)}">Renombrar</button><button data-act="del-grp" data-id="${esc(g.id)}">Quitar grupo</button></div>`:''}</div>`).join('') +
     (esF() ? '<button class="item addg" data-act="add-grp">+ Agregar grupo al menú</button>' : '');
-  $('#foot').innerHTML = `<div class="role ${esF()?'edit':''}"><i></i>${esF()?'Modo formador':'Modo lectura'}</div>` +
+  $('#foot').innerHTML = (S.estado ? `<div class="estado-act"><b>Última actualización</b>${esc(fechaHora(S.estado.actualizado))}${S.estado.detalle?'<br>'+esc(S.estado.detalle):''}</div>` : '') +
+    `<div class="role ${esF()?'edit':''}"><i></i>${esF()?'Modo formador':'Modo lectura'}</div>` +
     (S.codigo ? `<div class="meta2">${S.nombre?esc(S.nombre)+' · ':''}Usuario ${esc(S.codigo)}</div>` : '') +
     (esF() ? '<button class="lnk" data-act="usuarios">Gestionar usuarios</button>' : '') +
     '<div style="margin-top:8px">By Jhonatan Morzán</div>';
@@ -327,20 +464,270 @@ function tarjetaMat(m){
     <div class="acts"><a class="btn sm" href="${esc(m.link)}" target="_blank" rel="noopener">${m.tipo==='Enlace'?'Abrir':'Ver material'}</a>
     ${esF()?`<button class="btn ghost sm" data-act="edit-mat" data-id="${m.id}">Editar</button><button class="btn danger sm" data-act="del-mat" data-id="${m.id}">Quitar</button>`:''}</div></article>`;
 }
+/* ===== Obligatorias, adjuntos y alerta ===== */
+const vigente = n => !n.vence || new Date(n.vence) >= new Date();
+const alertable = n => !!(n.obligatoria || n.recordada_en) && vigente(n);
+const omisionesDe = nid => (S.omisiones.find(o => o.noticia_id === nid && o.user_id === S.uid) || {}).veces || 0;
+const kSes = n => n.id + '|' + (n.recordada_en || '');
+function hechasCargar(){ try{ S.hechas = new Set(JSON.parse(sessionStorage.getItem('hechas_' + S.uid) || '[]')); }catch(e){ S.hechas = new Set(); } }
+function hechaMarcar(n){ if(!n) return; S.hechas.add(kSes(n)); try{ sessionStorage.setItem('hechas_' + S.uid, JSON.stringify([...S.hechas])); }catch(e){} }
+const pendientesAlerta = () => esF() ? [] : S.noticias.filter(n => alertable(n) && !(miVisto(n.id) && miVisto(n.id).estado === 'ok') && !S.hechas.has(kSes(n)));
+function adjuntosHTML(n){
+  const a = (n.adjuntos || []).filter(x => x && urlOk(x.url));
+  if(!a.length) return '';
+  const esImg = x => /^image\//.test(x.tipo || '') || /\.(png|jpe?g|gif|webp)$/i.test(x.nombre || '');
+  return `<div class="adj">${a.filter(esImg).map(x => `<a href="${esc(x.url)}" target="_blank" rel="noopener" title="${esc(x.nombre)}"><img src="${esc(x.url)}" alt="${esc(x.nombre)}" loading="lazy"></a>`).join('')}${a.filter(x => !esImg(x)).map(x => `<a class="chipa" href="${esc(x.url)}" target="_blank" rel="noopener" title="${esc(x.nombre)}">📎 ${esc(x.nombre)}</a>`).join('')}</div>`;
+}
+function etiquetasOblig(n){
+  if(!n.obligatoria) return '';
+  return vigente(n)
+    ? `<span class="tag oblig">Obligatoria · ${n.vence ? 'hasta ' + esc(fecha(n.vence)) : 'sin fecha límite'}</span>`
+    : `<span class="tag plano">Obligatoria · venció ${esc(fecha(n.vence))}</span>`;
+}
+const alerta = document.querySelector('#alerta');
+alerta.addEventListener('cancel', e => e.preventDefault()); // no se cierra con Esc
+function cartaAlerta(n){
+  const quedan = Math.max(0, 2 - omisionesDe(n.id));
+  return `<article class="altn">
+    <div class="tags"><span class="tag cat">${esc(n.categoria)}</span>${n.recordada_en ? '<span class="tag urg">Recordatorio</span>' : ''}${n.vence ? `<span class="tag plano">Hasta ${esc(fecha(n.vence))}</span>` : ''}</div>
+    <h4>${esc(n.titulo)}</h4><p>${esc(n.cuerpo)}</p>${adjuntosHTML(n)}
+    <div class="hora">🗓 Publicado: <b>${esc(fechaHora(n.creado))}</b></div>
+    <div class="vb"><button class="btn ok sm" data-act="vb-ok" data-id="${n.id}">✔ Leído y conforme</button>
+      <button class="btn no sm" data-act="vb-duda" data-id="${n.id}">✖ Tengo una duda</button>
+      ${quedan > 0 ? `<button class="btn ghost sm" data-act="omitir" data-id="${n.id}">Omitir por ahora (${quedan} ${quedan === 1 ? 'vez más' : 'veces más'})</button>`
+                   : '<span class="meta">Ya no puedes omitirla: da tu visto bueno o envía tu duda.</span>'}</div></article>`;
+}
+function revisarAlerta(){
+  if(!S.uid || esF() || S.cargando || S.error){ if(alerta.open) alerta.close(); return; }
+  const pend = pendientesAlerta();
+  if(!pend.length){ if(alerta.open) alerta.close(); return; }
+  if(dlg.open && !alerta.open) return;
+  alerta.innerHTML = `<div class="alt"><div class="altcab"><span class="altico">⚠️</span><div><h3>Tienes ${pend.length} noticia${pend.length > 1 ? 's' : ''} pendiente${pend.length > 1 ? 's' : ''} de visto bueno</h3>
+    <p>Léela${pend.length > 1 ? 's' : ''} y confirma para continuar. Puedes omitir cada una hasta 2 veces; la tercera es obligatoria.</p></div></div>
+    ${pend.map(cartaAlerta).join('')}
+    <div class="altpie"><span>Si tienes una duda, escríbela y un formador te responderá.</span><button class="lnk" data-act="logout">Cerrar sesión</button></div></div>`;
+  if(!alerta.open) alerta.showModal();
+}
+
+/* ===== Noticias: filtros, tarjetas y visto bueno ===== */
+const per = id => S.perfiles.find(x => x.id === id);
+function noticiasFiltradas(){
+  const {q,cat,dia} = S.f, ql = norm(q);
+  return S.noticias.filter(n =>
+    (!cat || n.categoria === cat) && (!dia || diaKey(n.creado) === dia) &&
+    (!ql || norm(n.titulo+' '+n.cuerpo+' '+n.categoria).includes(ql)));
+}
+function quienes(n){
+  const ases = S.perfiles.filter(p => p.rol === 'asesor');
+  const vm = new Map(S.vistos.filter(v => v.noticia_id === n.id).map(v => [v.user_id, v]));
+  const ok = [], duda = [], pend = [];
+  ases.forEach(a => { const v = vm.get(a.id); (!v ? pend : v.estado === 'ok' ? ok : duda).push({a, v}); });
+  return {ok, duda, pend};
+}
+function listasHTML(n){
+  const q = quienes(n);
+  const col = (t, arr, cls) => `<div><h4><span class="est ${cls}">${t} ${arr.length}</span></h4><ul>${arr.map(x => `<li>${esc(quien(x.a))}${x.v ? ` <small>· ${esc(fechaHora(x.v.fecha))}</small>` : ''}</li>`).join('') || '<li>—</li>'}</ul></div>`;
+  return `<div class="listas">${col('✔ Visto bueno', q.ok, 'ok')}${col('✖ Con duda', q.duda, 'duda')}${col('⏳ Pendientes', q.pend, 'pend')}</div>`;
+}
+function hiloHTML(n){
+  return misPreg(n.id).map(p => {
+    const u = esF() ? per(p.user_id) : null;
+    const r = p.respuesta
+      ? `<div class="r"><b>Respuesta del formador · ${esc(fechaHora(p.respondido_en))}${(!esF() && !p.leida) ? '<span class="nuevo">NUEVA</span>' : ''}</b>${esc(p.respuesta)}</div>`
+      : (esF() ? '' : '<div class="r"><b>Esperando respuesta de un formador…</b></div>');
+    return `<div class="q"><b>${esF() ? esc(u ? quien(u) : 'Usuario') : 'Tu pregunta'} · ${esc(fechaHora(p.creado))}</b>${esc(p.pregunta)}${r}
+      ${esF() ? `<div class="tools"><button class="btn sm" data-act="resp-preg" data-id="${p.id}">${p.respuesta ? 'Editar respuesta' : 'Responder'}</button></div>` : ''}</div>`;
+  }).join('');
+}
+function bloqueVB(n){
+  if(esF()){
+    const q = quienes(n);
+    return `<div class="vb"><div class="resumen"><span class="est ok">✔ ${q.ok.length}</span><span class="est duda">✖ ${q.duda.length}</span><span class="est pend">⏳ ${q.pend.length}</span></div>
+      <button class="btn ghost sm" data-act="ver-quienes" data-id="${n.id}">Ver quién</button></div>`;
+  }
+  const v = miVisto(n.id);
+  if(!v) return `<div class="vb"><button class="btn ok sm" data-act="vb-ok" data-id="${n.id}">✔ Leído y conforme</button><button class="btn no sm" data-act="vb-duda" data-id="${n.id}">✖ Tengo una duda</button></div>`;
+  if(v.estado === 'ok') return `<div class="vb"><span class="est ok">✔ Visto bueno dado · ${esc(fechaHora(v.fecha))}</span><button class="btn ghost sm" data-act="vb-duda" data-id="${n.id}">Tengo una duda</button></div>`;
+  return `<div class="vb"><span class="est duda">✖ Con duda</span><button class="btn ok sm" data-act="vb-ok" data-id="${n.id}">✔ Ya me quedó claro, dar visto bueno</button><button class="btn ghost sm" data-act="vb-duda" data-id="${n.id}">Hacer otra pregunta</button></div>`;
+}
+function tarjetaNoticia(n){
+  let cant = 0;
+  if(esF()){ const q = quienes(n); cant = q.pend.length + q.duda.length; }
+  const tools = esF() ? `<div class="tools"><button class="btn add sm" data-act="recordar" data-id="${n.id}" title="Les vuelve a salir el panel de alerta al conectarse">🔔 Recordar a pendientes (${cant})</button><button class="btn ghost sm" data-act="edit-news" data-id="${n.id}">Editar</button><button class="btn danger sm" data-act="del-news" data-id="${n.id}">Quitar</button></div>` : '';
+  const hilo = hiloHTML(n);
+  return `<article class="nw ${n.urgente ? 'urg' : ''}">
+    <div class="tags"><span class="tag cat">${esc(n.categoria)}</span>${n.urgente ? '<span class="tag urg">Último minuto</span>' : ''}${etiquetasOblig(n)}</div>
+    <h3>${esc(n.titulo)}</h3><p>${esc(n.cuerpo)}</p>${adjuntosHTML(n)}
+    <div class="hora">🗓 Publicado: <b>${esc(fechaHora(n.creado))}</b>${esF() && n.recordatorios ? ` · 🔔 Último recordatorio: ${esc(fechaHora(n.recordada_en))} (${n.recordatorios} ${n.recordatorios === 1 ? 'vez' : 'veces'})` : ''}</div>
+    ${hilo ? `<div class="qa-thread">${hilo}</div>` : ''}
+    ${bloqueVB(n)}${tools}</article>`;
+}
+function dibujarFechas(){
+  const por = {};
+  S.noticias.filter(n => !S.f.cat || n.categoria === S.f.cat).forEach(n => { const k = diaKey(n.creado); por[k] = (por[k] || 0) + 1; });
+  const ks = Object.keys(por).sort().reverse();
+  const total = Object.values(por).reduce((a,b) => a+b, 0);
+  $('#rcol').innerHTML = `<div class="card"><h3>Boletines por fecha</h3>
+    <label class="meta" for="fdia">Ir a una fecha</label>
+    <input type="date" id="fdia" value="${esc(S.f.dia)}">
+    <div class="dias">
+      <button class="dia ${!S.f.dia ? 'on' : ''}" data-act="dia" data-id="">Todas las fechas <em>${total}</em></button>
+      ${ks.map(k => `<button class="dia ${S.f.dia === k ? 'on' : ''}" data-act="dia" data-id="${k}">${esc(diaLargo(k))} <em>${por[k]}</em></button>`).join('')}
+    </div></div>`;
+}
+function dibujarFeed(){
+  const lista = noticiasFiltradas();
+  const hayFiltro = S.f.q || S.f.cat || S.f.dia;
+  $('#feed').innerHTML = lista.map(tarjetaNoticia).join('') ||
+    `<div class="empty"><b>${hayFiltro ? 'No hay noticias con esos filtros' : 'Aún no hay noticias'}</b>${hayFiltro ? 'Prueba con otra palabra, categoría o fecha.' : 'Cuando un formador publique una, aparecerá aquí.'}</div>`;
+  const c = $('#cuenta'); if(c) c.textContent = lista.length + (lista.length === 1 ? ' noticia' : ' noticias');
+  dibujarFechas();
+}
 function dibujarInicio(){
-  const [p,...r] = S.noticias;
-  const tools = n => esF() ? `<div class="tools"><button class="btn ghost sm" data-act="edit-news" data-id="${n.id}">Editar</button><button class="btn danger sm" data-act="del-news" data-id="${n.id}">Quitar</button></div>` : '';
-  const rec = S.materiales.slice(0,4);
+  const nuevas = esF() ? 0 : S.preguntas.filter(p => p.user_id === S.uid && p.respuesta && !p.leida).length;
+  const pend = esF() ? S.preguntas.filter(p => !p.respuesta).length : 0;
+  const rec = (S.f.q || S.f.cat || S.f.dia) ? [] : S.materiales.slice(0,4);
   $('#main').innerHTML = `
     <div class="head"><div><h1>Noticias del área de formación</h1><p class="sub">Avisos, actualizaciones y material nuevo, en un solo lugar.</p></div>
-    ${esF()?'<button class="btn" data-act="add-news">+ Publicar noticia</button>':''}</div>
-    ${p ? `<div class="news">
-      <article class="hero-n"><span class="tag ${p.urgente?'urg':''}">${p.urgente?'Último minuto':'Novedad'}</span>
-        <h3>${esc(p.titulo)}</h3><p>${esc(p.cuerpo)}</p><div class="meta">${fecha(p.fecha)}</div>${tools(p)}</article>
-      <div class="nlist">${r.map(n=>`<article class="nitem"><span class="tag ${n.urgente?'urg':''}">${n.urgente?'Último minuto':'Novedad'}</span><h3>${esc(n.titulo)}</h3><p>${esc(n.cuerpo)}</p><div class="meta">${fecha(n.fecha)}</div>${tools(n)}</article>`).join('') || '<div class="nitem"><p>No hay más noticias por ahora.</p></div>'}</div>
-    </div>` : '<div class="empty"><b>Aún no hay noticias</b>Cuando un formador publique una, aparecerá aquí.</div>'}
+    ${esF() ? '<button class="btn" data-act="add-news">+ Publicar noticia</button>' : ''}</div>
+    ${nuevas ? `<div class="aviso"><span>💬 Tienes ${nuevas} respuesta${nuevas>1?'s':''} nueva${nuevas>1?'s':''} de tus formadores.</span><button class="btn sm" data-act="leidas">Marcar como leídas</button></div>` : ''}
+    ${pend ? `<div class="aviso"><span>💬 Hay ${pend} pregunta${pend>1?'s':''} de asesores por responder.</span></div>` : ''}
+    <div class="filtros">
+      <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="qn" type="search" placeholder="Buscar noticias por palabra clave" value="${esc(S.f.q)}" aria-label="Buscar noticias"></label>
+      <select id="fcat" aria-label="Filtrar por categoría"><option value="">Todas las categorías</option>${CATS.map(c => `<option ${S.f.cat === c ? 'selected' : ''}>${c}</option>`).join('')}</select>
+      ${S.f.dia ? `<span class="chipf">📅 ${esc(diaLargo(S.f.dia))}<button data-act="dia" data-id="" aria-label="Quitar filtro de fecha">×</button></span>` : ''}
+      <span class="meta" id="cuenta"></span>
+    </div>
+    <div class="feed" id="feed"></div>
     ${rec.length ? `<h2>Material reciente</h2><div class="grid">${rec.map(tarjetaMat).join('')}</div>` : ''}`;
+  dibujarFeed();
 }
+
+/* ===== Panel de indicadores (solo formadores) ===== */
+function fmtH(h){ return h == null ? '—' : h < 1 ? Math.round(h*60)+' min' : h < 48 ? h.toFixed(1)+' h' : (h/24).toFixed(1)+' días'; }
+function datosPanel(){
+  const ases = S.perfiles.filter(p => p.rol === 'asesor');
+  const ids = new Set(ases.map(a => a.id));
+  const desde = S.p.dias === 'todo' ? 0 : Date.now() - Number(S.p.dias) * 864e5;
+  const nots = S.noticias.filter(n => new Date(n.creado).getTime() >= desde && (!S.p.cat || n.categoria === S.p.cat));
+  const nmap = new Map(nots.map(n => [n.id, n]));
+  const vs = S.vistos.filter(v => nmap.has(v.noticia_id) && ids.has(v.user_id));
+  return {ases, nots, nmap, vs};
+}
+const barra = (nm, ok, duda, pend) => { const t = (ok+duda+pend) || 1;
+  return `<div class="bar"><span class="nm" title="${esc(nm)}">${esc(nm)}</span><div class="tr"><i class="c-ok" style="width:${ok*100/t}%"></i><i class="c-duda" style="width:${duda*100/t}%"></i><i class="c-pend" style="width:${pend*100/t}%"></i></div><span class="vl">${Math.round(ok*100/t)}% ✔</span></div>`; };
+function dibujarPanel(){
+  const {ases, nots, nmap, vs} = datosPanel();
+  const A = ases.length, N = nots.length, esperado = A * N;
+  const ok = vs.filter(v => v.estado === 'ok').length, duda = vs.filter(v => v.estado === 'duda').length;
+  const pend = Math.max(0, esperado - ok - duda);
+  const pct = esperado ? Math.round(ok * 100 / esperado) : 0;
+  const pregs = S.preguntas.filter(p => nmap.has(p.noticia_id));
+  const abiertas = pregs.filter(p => !p.respuesta);
+  const tResp = pregs.filter(p => p.respuesta && p.respondido_en).map(p => (new Date(p.respondido_en) - new Date(p.creado)) / 36e5).filter(h => h >= 0);
+  const tConf = vs.filter(v => v.estado === 'ok').map(v => (new Date(v.fecha) - new Date(nmap.get(v.noticia_id).creado)) / 36e5).filter(h => h >= 0);
+  const prom = a => a.length ? a.reduce((x,y) => x+y, 0) / a.length : null;
+
+  // Por categoría
+  const porCat = CATS.map(c => {
+    const ns = nots.filter(n => n.categoria === c), set = new Set(ns.map(n => n.id));
+    const o = vs.filter(v => set.has(v.noticia_id) && v.estado === 'ok').length;
+    const d = vs.filter(v => set.has(v.noticia_id) && v.estado === 'duda').length;
+    return {c, n: ns.length, o, d, p: Math.max(0, A * ns.length - o - d), q: pregs.filter(p => set.has(p.noticia_id)).length};
+  });
+  const maxN = Math.max(1, ...porCat.map(x => x.n));
+
+  // Por noticia (las 10 más recientes)
+  const porNot = nots.slice(0, 10).map(n => {
+    const o = vs.filter(v => v.noticia_id === n.id && v.estado === 'ok').length;
+    const d = vs.filter(v => v.noticia_id === n.id && v.estado === 'duda').length;
+    return {n, o, d, p: Math.max(0, A - o - d)};
+  });
+
+  // Noticias por día (14 días)
+  const dias = []; for(let i = 13; i >= 0; i--) dias.push(diaKey(new Date(Date.now() - i * 864e5)));
+  const cuenta = {}; S.noticias.filter(n => !S.p.cat || n.categoria === S.p.cat).forEach(n => { const k = diaKey(n.creado); cuenta[k] = (cuenta[k] || 0) + 1; });
+  const maxD = Math.max(1, ...dias.map(k => cuenta[k] || 0));
+
+  // Por asesor
+  const filas = ases.map(a => {
+    const mios = vs.filter(v => v.user_id === a.id);
+    const o = mios.filter(v => v.estado === 'ok').length, d = mios.filter(v => v.estado === 'duda').length;
+    const om = S.omisiones.filter(x => x.user_id === a.id && nmap.has(x.noticia_id)).reduce((s, x) => s + x.veces, 0);
+    return {a, o, d, om, p: Math.max(0, N - o - d), pc: N ? Math.round(o * 100 / N) : 0};
+  }).sort((x,y) => x.pc - y.pc || (x.a.codigo||'').localeCompare(y.a.codigo||''));
+
+  // Reporte por noticia
+  const nSel = nots.find(n => String(n.id) === String(S.p.noticia)) || nots[0];
+
+  const a1 = pct, a2 = pct + (esperado ? Math.round(duda * 100 / esperado) : 0);
+  $('#main').innerHTML = `
+    <div class="head"><div><h1>Panel de indicadores</h1><p class="sub">Visto bueno de las noticias, dudas y actividad del área. Solo visible para formadores.</p></div>
+      <div class="tools"><button class="btn add" data-act="csv-matriz">Descargar reporte general (CSV)</button></div></div>
+    <div class="filtros">
+      <select id="pdias" aria-label="Periodo">${[['7','Últimos 7 días'],['30','Últimos 30 días'],['90','Últimos 90 días'],['todo','Todo el historial']].map(([v,l]) => `<option value="${v}" ${S.p.dias===v?'selected':''}>${l}</option>`).join('')}</select>
+      <select id="pcat" aria-label="Categoría"><option value="">Todas las categorías</option>${CATS.map(c => `<option ${S.p.cat===c?'selected':''}>${c}</option>`).join('')}</select>
+      <span class="meta">Se calcula sobre los ${A} asesores creados en “Gestionar usuarios”.</span>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><span>Asesores</span><b>${A}</b><small>usuarios con rol asesor</small></div>
+      <div class="kpi"><span>Noticias en el periodo</span><b>${N}</b><small>publicadas</small></div>
+      <div class="kpi"><span>Cobertura de visto bueno</span><b>${pct}%</b><small>${ok} de ${esperado} confirmaciones</small></div>
+      <div class="kpi"><span>Con duda</span><b>${duda}</b><small>asesores marcaron ✖</small></div>
+      <div class="kpi"><span>Sin responder (asesor)</span><b>${pend}</b><small>pendientes de ✔ o ✖</small></div>
+      <div class="kpi"><span>Obligatorias vigentes</span><b>${S.noticias.filter(alertable).length}</b><small>con panel de alerta activo</small></div>
+      <div class="kpi"><span>Preguntas por responder</span><b>${abiertas.length}</b><small>${pregs.length} preguntas en total</small></div>
+      <div class="kpi"><span>Tiempo hasta el ✔</span><b>${fmtH(prom(tConf))}</b><small>promedio desde la publicación</small></div>
+      <div class="kpi"><span>Tiempo de respuesta</span><b>${fmtH(prom(tResp))}</b><small>promedio de los formadores</small></div>
+    </div>
+    <div class="two">
+      <section class="card"><h3>Estado global</h3>
+        <div style="display:flex;gap:22px;align-items:center;flex-wrap:wrap">
+          <div class="donut" style="background:conic-gradient(#2FB874 0 ${a1}%,#D63B3B ${a1}% ${a2}%,#C9D2E0 ${a2}% 100%)"><b>${pct}%</b></div>
+          <div class="leyenda"><span><i class="c-ok"></i>Visto bueno: ${ok}</span><span><i class="c-duda"></i>Con duda: ${duda}</span><span><i class="c-pend"></i>Pendientes: ${pend}</span></div>
+        </div></section>
+      <section class="card"><h3>Noticias publicadas por día (14 días)</h3>
+        <div class="dias14">${dias.map(k => { const v = cuenta[k] || 0; return `<div title="${esc(diaLargo(k))}: ${v}"><span>${v || ''}</span><i style="height:${v * 100 / maxD * .8}%"></i><span>${k.slice(8)}</span></div>`; }).join('')}</div></section>
+    </div>
+    <div class="two">
+      <section class="card"><h3>Noticias por categoría</h3>
+        ${porCat.map(x => `<div class="bar"><span class="nm">${x.c}</span><div class="tr"><i style="width:${x.n * 100 / maxN}%;background:${COL_CAT[x.c]}"></i></div><span class="vl">${x.n} · ${x.q} preg.</span></div>`).join('')}</section>
+      <section class="card"><h3>Visto bueno por categoría</h3>
+        ${porCat.map(x => barra(x.c, x.o, x.d, x.p)).join('')}
+        <p class="meta" style="margin-top:8px">Verde ✔ · Rojo ✖ duda · Gris pendiente</p></section>
+    </div>
+    <section class="card" style="margin-bottom:18px"><h3>Visto bueno por noticia (las 10 más recientes)</h3>
+      ${porNot.map(x => barra(x.n.titulo, x.o, x.d, x.p)).join('') || '<p class="meta">No hay noticias en este periodo.</p>'}</section>
+    <section class="card" style="margin-bottom:18px"><h3>Noticias obligatorias o recordadas vigentes</h3>
+      ${(() => { const act = S.noticias.filter(alertable);
+        return act.length ? `<div class="scroll"><table class="tb"><thead><tr><th>Noticia</th><th>Vence</th><th>Sin ✔</th><th>Recordatorios</th><th></th></tr></thead><tbody>${act.map(n => { const q = quienes(n);
+          return `<tr><td>${esc(n.titulo)}<br><small class="meta">${esc(n.categoria)} · ${esc(fechaHora(n.creado))}</small></td><td>${n.vence ? esc(fecha(n.vence)) : 'Sin límite'}</td><td>${q.pend.length + q.duda.length}</td><td>${n.recordatorios || 0}</td><td><button class="btn add sm" data-act="recordar" data-id="${n.id}">🔔 Recordar</button></td></tr>`; }).join('')}</tbody></table></div>`
+        : '<p class="meta">No hay noticias obligatorias vigentes. Márcalas como obligatorias al publicarlas o usa “Recordar a pendientes” en cualquier noticia.</p>'; })()}</section>
+    <section class="card" style="margin-bottom:18px"><h3>Reporte por noticia</h3>
+      ${nots.length ? `<div class="filtros"><select id="pnot" style="flex:1;min-width:240px">${nots.map(n => `<option value="${n.id}" ${nSel && nSel.id === n.id ? 'selected' : ''}>${esc(fecha(n.creado))} · ${esc(n.titulo.slice(0,70))}</option>`).join('')}</select>
+        <button class="btn ghost sm" data-act="csv-noticia" data-id="${nSel.id}">Descargar CSV</button></div>${listasHTML(nSel)}` : '<p class="meta">No hay noticias en este periodo.</p>'}</section>
+    <div class="two">
+      <section class="card"><h3>Asesores (de menor a mayor cumplimiento)</h3>
+        <div class="scroll"><table class="tb"><thead><tr><th>Asesor</th><th>✔</th><th>✖</th><th>Pend.</th><th>%</th><th title="Veces que omitió una noticia obligatoria">Omis.</th></tr></thead><tbody>
+        ${filas.map(f => `<tr><td>${esc(quien(f.a))}</td><td>${f.o}</td><td>${f.d}</td><td>${f.p}</td><td><span class="mini-bar"><i style="width:${f.pc}%"></i></span>${f.pc}%</td><td>${f.om}</td></tr>`).join('') || '<tr><td colspan="6">Aún no hay asesores.</td></tr>'}
+        </tbody></table></div></section>
+      <section class="card"><h3>Preguntas por responder</h3>
+        <div class="scroll">${abiertas.slice().reverse().map(p => { const u = per(p.user_id), n = nmap.get(p.noticia_id);
+          return `<div class="q" style="margin-bottom:8px;white-space:pre-line"><b>${esc(u ? quien(u) : 'Usuario')} · ${esc(fechaHora(p.creado))}</b><i>${esc(n ? n.titulo : '')}</i><br>${esc(p.pregunta)}
+            <div class="tools" style="margin-top:8px"><button class="btn sm" data-act="resp-preg" data-id="${p.id}">Responder</button></div></div>`; }).join('') || '<p class="meta">No hay preguntas pendientes. 🎉</p>'}</div></section>
+    </div>`;
+}
+function descargarCSV(nombre, filas){
+  const txt = '\ufeff' + filas.map(r => r.map(c => `"${String(c ?? '').replace(/"/g,'""')}"`).join(',')).join('\r\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([txt], {type:'text/csv;charset=utf-8'}));
+  a.download = nombre; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+}
+const estTxt = v => !v ? 'Pendiente' : v.estado === 'ok' ? 'Visto bueno' : 'Con duda';
+const hoyKey = () => diaKey(new Date());
+
 function tarjetaBlk(b){
   return `<article class="blk"><h3>${esc(b.titulo)}</h3><pre>${esc(b.texto)}</pre>
     <div class="acts"><button class="btn sm" data-act="copy" data-id="${b.id}">Copiar texto</button>
@@ -366,7 +753,13 @@ function dibujar(){
   if(S.error){ $('#ticker').innerHTML=''; $('#main').innerHTML=`<div class="empty"><b>No se pudo cargar el contenido</b>${esc(S.error)}</div>`; return; }
   dibujarTicker();
   const t = temaDe(S.vista);
-  t ? dibujarTema(t) : dibujarInicio();
+  const enNoticias = !t && S.vista !== 'panel';
+  $('#cols').classList.toggle('solo', !enNoticias);
+  $('#rcol').hidden = !enNoticias;
+  if(t) dibujarTema(t);
+  else if(S.vista === 'panel' && esF()) dibujarPanel();
+  else dibujarInicio();
+  revisarAlerta();
 }
 function ir(id){
   S.vista = id;
@@ -384,6 +777,8 @@ function form(titulo, campos, guardar, vals={}){
     if(c.t==='sel') return `<label>${c.l}<select name="${c.k}">${c.o.map(o=>`<option ${o===v?'selected':''}>${esc(o)}</option>`).join('')}</select></label>`;
     if(c.t==='chk') return `<label class="chk"><input type="checkbox" name="${c.k}" ${v?'checked':''}>${c.l}</label>`;
     if(c.t==='file') return `<label>${c.l}<input type="file" name="${c.k}" accept="${c.acc||''}"></label>`;
+    if(c.t==='files') return `<label>${c.l}<input type="file" name="${c.k}" accept="${c.acc||''}" multiple></label>`;
+    if(c.t==='checks') return `<fieldset class="chks"><legend>${c.l}</legend>${c.o.map(([val,lab]) => `<label class="chk"><input type="checkbox" name="${c.k}" value="${esc(val)}">${esc(lab)}</label>`).join('')}</fieldset>`;
     return `<label>${c.l}<input name="${c.k}" type="${c.t||'text'}" value="${esc(v)}" ${c.req?'required':''} placeholder="${esc(c.p||'')}"></label>`;
   }).join('') + `<p class="err" id="ferr" hidden></p><div class="row"><button class="btn ghost" type="button" data-close>Cancelar</button><button class="btn" type="submit">Guardar</button></div></form>`;
   const fm = dlg.querySelector('form');
@@ -393,6 +788,8 @@ function form(titulo, campos, guardar, vals={}){
     campos.forEach(c => {
       if(c.t==='chk') o[c.k] = f.has(c.k);
       else if(c.t==='file'){ const x=f.get(c.k); o[c.k] = x && x.size ? x : null; }
+      else if(c.t==='files') o[c.k] = f.getAll(c.k).filter(x => x && x.size);
+      else if(c.t==='checks') o[c.k] = f.getAll(c.k);
       else o[c.k] = (f.get(c.k)||'').trim();
     });
     btn.disabled = true; btn.textContent = 'Guardando…'; er.hidden = true;
@@ -426,12 +823,64 @@ async function usuariosDlg(){
 }
 
 /* ===== Acciones ===== */
-const camposNoticia = [{k:'titulo',l:'Título',req:1},{k:'cuerpo',l:'Mensaje',t:'area',req:1},{k:'urgente',l:'Marcar como último minuto (aparece en la cinta superior)',t:'chk'}];
+const camposNoticia = n => [
+  {k:'titulo',l:'Título',req:1},{k:'categoria',l:'Categoría',t:'sel',o:CATS},{k:'cuerpo',l:'Mensaje',t:'area',req:1},
+  {k:'urgente',l:'Marcar como último minuto (aparece en la cinta superior)',t:'chk'},
+  {k:'obligatoria',l:'Noticia obligatoria: a quien no dé visto bueno le saldrá un panel de alerta al conectarse',t:'chk'},
+  {k:'limite',l:'Obligatoria hasta esta fecha (déjalo vacío para que dure para siempre)',t:'date'},
+  {k:'archivos',l:'Adjuntar archivos (PDF, imágenes, Word, Excel…). Puedes elegir varios, máx. 20 MB c/u',t:'files',acc:'.pdf,image/*,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.csv,.txt'},
+  ...(n && (n.adjuntos || []).length ? [{k:'quitar',l:'Archivos ya adjuntos: marca los que quieres quitar',t:'checks',o:n.adjuntos.map(a => [a.url, a.nombre])}] : [])
+];
+/* Sube los archivos nuevos y arma los datos de la noticia. */
+async function datosNoticia(o, previos = []){
+  const quitar = new Set(o.quitar || []);
+  const adjuntos = previos.filter(a => !quitar.has(a.url));
+  for(const f of (o.archivos || [])){
+    if(f.size > 20 * 1024 * 1024) throw new Error(`"${f.name}" pesa más de 20 MB.`);
+    adjuntos.push({nombre: f.name, url: await subir(f), tipo: f.type || ''});
+  }
+  const vence = (o.obligatoria && o.limite) ? new Date(o.limite + 'T23:59:59-05:00').toISOString() : null;
+  if(vence && new Date(vence) < new Date()) throw new Error('La fecha límite ya pasó. Elige una fecha de hoy en adelante.');
+  return {datos: {titulo:o.titulo, categoria:o.categoria, cuerpo:o.cuerpo, urgente:o.urgente, obligatoria:o.obligatoria, vence, adjuntos}, quitados: previos.filter(a => quitar.has(a.url))};
+}
 const camposMat = [{k:'titulo',l:'Nombre del material',req:1},{k:'tipo',l:'Tipo',t:'sel',o:['PDF','Flyer','Enlace']},
   {k:'archivo',l:'Subir archivo (PDF o imagen)',t:'file',acc:'.pdf,image/*'},{k:'link',l:'…o pegar un enlace',p:'https://'}];
 
 const ACC = {
   logout: async () => { await sb.auth.signOut(); },
+
+  /* Noticias: filtro por fecha, visto bueno, preguntas y reportes */
+  dia: (k) => { S.f.dia = k || ''; dibujarInicio(); },
+  leidas: async () => { const {error} = await sb.rpc('marcar_respuestas_leidas'); if(error) throw error; await refrescar(); },
+  'vb-ok': async id => {
+      const {error} = await sb.from('noticia_vistos').upsert({noticia_id:Number(id), user_id:S.uid, estado:'ok', fecha:new Date().toISOString()}, {onConflict:'noticia_id,user_id'});
+      if(error) throw error; await refrescar(); },
+  'vb-duda': id => form('Tengo una duda', [{k:'pregunta',l:'Escribe tu pregunta para los formadores',t:'area',req:1,p:'¿Qué parte no te quedó clara?'}],
+      async o => {
+        const {error:e1} = await sb.from('noticia_vistos').upsert({noticia_id:Number(id), user_id:S.uid, estado:'duda', fecha:new Date().toISOString()}, {onConflict:'noticia_id,user_id'});
+        if(e1) throw e1;
+        const {error:e2} = await sb.from('noticia_preguntas').insert({noticia_id:Number(id), user_id:S.uid, pregunta:o.pregunta});
+        if(e2) throw e2;
+        hechaMarcar(S.noticias.find(x => x.id == id)); // al enviar su duda, no se bloquea en esta sesión
+      }),
+  'resp-preg': id => { const p = S.preguntas.find(x => x.id == id); const u = per(p.user_id);
+      form('Responder pregunta' + (u ? ' de ' + quien(u) : ''), [{k:'respuesta',l:'Pregunta: ' + p.pregunta,t:'area',req:1,p:'Escribe la respuesta…'}],
+        o => mut(sb.from('noticia_preguntas').update({respuesta:o.respuesta, respondido_por:S.uid, respondido_en:new Date().toISOString(), leida:false}).eq('id',id)),
+        {respuesta:p.respuesta || ''}); },
+  'ver-quienes': id => { const n = S.noticias.find(x => x.id == id);
+      dlg.innerHTML = `<div class="dlg" style="width:100%"><h3>${esc(n.titulo)}</h3><p class="meta">Publicado: ${esc(fechaHora(n.creado))}</p>${listasHTML(n)}
+        <div class="row"><button class="btn ghost" data-act="csv-noticia" data-id="${n.id}">Descargar CSV</button><button class="btn" data-close>Cerrar</button></div></div>`;
+      dlg.showModal(); },
+  'csv-noticia': id => { const n = S.noticias.find(x => x.id == id); const q = quienes(n);
+      const filas = [['Noticia','Categoría','Publicada','Código','Nombre','Estado','Fecha de respuesta']];
+      [...q.ok, ...q.duda, ...q.pend].forEach(x => filas.push([n.titulo, n.categoria, fechaHora(n.creado), x.a.codigo, x.a.nombre || '', estTxt(x.v), x.v ? fechaHora(x.v.fecha) : '']));
+      descargarCSV('visto-bueno-' + hoyKey() + '.csv', filas); },
+  'csv-matriz': () => { const {ases, nots} = datosPanel();
+      const filas = [['Código','Nombre', ...nots.map(n => n.titulo + ' [' + n.categoria + ' · ' + fechaHora(n.creado) + ']'), 'Visto bueno','Con duda','Pendientes','% cumplimiento']];
+      ases.forEach(a => { const est = nots.map(n => S.vistos.find(v => v.noticia_id === n.id && v.user_id === a.id));
+        const o = est.filter(v => v && v.estado === 'ok').length, d = est.filter(v => v && v.estado === 'duda').length;
+        filas.push([a.codigo, a.nombre || '', ...est.map(estTxt), o, d, nots.length - o - d, nots.length ? Math.round(o * 100 / nots.length) + '%' : '0%']); });
+      descargarCSV('reporte-general-' + hoyKey() + '.csv', filas); },
   usuarios: () => usuariosDlg(),
   'add-users': () => form('Agregar usuarios',[
       {k:'rol',l:'Rol de estas personas',t:'sel',o:['Asesor','Formador']},
@@ -458,8 +907,25 @@ const ACC = {
       const {error} = await sb.rpc('borrar_usuario', {p_id:id}); if(error) throw error;
       await usuariosDlg(); },
 
-  'add-news': () => form('Publicar noticia', camposNoticia, o => mut(sb.from('noticias').insert(o))),
-  'edit-news': id => { const n=S.noticias.find(x=>x.id==id); form('Editar noticia', camposNoticia, o => mut(sb.from('noticias').update(o).eq('id',id)), n); },
+  'add-news': () => form('Publicar noticia', camposNoticia(null), async o => {
+      const {datos} = await datosNoticia(o); await mut(sb.from('noticias').insert(datos)); }),
+  'edit-news': id => { const n=S.noticias.find(x=>x.id==id);
+      form('Editar noticia', camposNoticia(n), async o => {
+        const {datos, quitados} = await datosNoticia(o, n.adjuntos || []);
+        await mut(sb.from('noticias').update(datos).eq('id',id));
+        for(const a of quitados) await borrarArchivo(a.url);
+      }, {...n, limite: n.vence ? diaKey(n.vence) : ''}); },
+  recordar: async id => { const n = S.noticias.find(x => x.id == id);
+      if(!vigente(n)) throw new Error('La fecha límite de esta noticia ya pasó. Edítala y amplía la fecha para poder recordarla.');
+      const q = quienes(n), cant = q.pend.length + q.duda.length;
+      if(!cant){ alert('Todos los asesores ya dieron su visto bueno. No hay a quién recordar.'); return; }
+      if(!confirm(`Se enviará un recordatorio a ${cant} asesor${cant > 1 ? 'es' : ''} que aún no dieron visto bueno.\n\nLes saldrá un panel de alerta al conectarse y se reinician sus 2 omisiones de esta noticia.`)) return;
+      const {error} = await sb.rpc('recordar_noticia', {p_id:Number(id)}); if(error) throw error;
+      await refrescar(); alert('Recordatorio enviado.'); },
+  omitir: async id => { const n = S.noticias.find(x => x.id == id);
+      if(omisionesDe(n.id) >= 2) throw new Error('Ya no puedes omitir esta noticia.');
+      const {error} = await sb.rpc('omitir_noticia', {p_id:Number(id)}); if(error) throw error;
+      hechaMarcar(n); await refrescar(); },
   'del-news': async id => { if(confirm('¿Quitar esta noticia?')){ await mut(sb.from('noticias').delete().eq('id',id)); await refrescar(); } },
 
   'add-mat': () => form('Agregar material', camposMat, async o => {
@@ -527,7 +993,26 @@ document.addEventListener('click', e => {
     (async () => ACC[a.dataset.act]?.(a.dataset.id, a))().catch(x => alert(msg(x))); }
 });
 document.addEventListener('input', e => { if(e.target.id==='q'){ const t=temaDe(S.vista); const pos=e.target.selectionStart; dibujarTema(t,e.target.value); const q=$('#q'); q.focus(); q.setSelectionRange(pos,pos); } });
-$('#burger').addEventListener('click', () => $('#side').classList.toggle('open'));
+document.addEventListener('input', e => {
+  if(e.target.id === 'qn'){ S.f.q = e.target.value; dibujarFeed(); }
+});
+document.addEventListener('change', e => {
+  const id = e.target.id, v = e.target.value;
+  if(id === 'fcat'){ S.f.cat = v; if(S.f.dia){ const hay = S.noticias.some(n => (!v || n.categoria === v) && diaKey(n.creado) === S.f.dia); if(!hay) S.f.dia = ''; } dibujarInicio(); }
+  else if(id === 'fdia'){ S.f.dia = v; dibujarInicio(); }
+  else if(id === 'pdias'){ S.p.dias = v; dibujarPanel(); }
+  else if(id === 'pcat'){ S.p.cat = v; S.p.noticia = ''; dibujarPanel(); }
+  else if(id === 'pnot'){ S.p.noticia = v; dibujarPanel(); }
+});
+// Menú lateral: en computadora se oculta/muestra; en celular se abre/cierra. Se recuerda la preferencia.
+const ESCRITORIO = window.matchMedia('(min-width:981px)');
+try{ if(localStorage.getItem('menuOculto') === '1') document.body.classList.add('menu-off'); }catch(e){}
+$('#burger').addEventListener('click', () => {
+  if(ESCRITORIO.matches){
+    const off = document.body.classList.toggle('menu-off');
+    try{ localStorage.setItem('menuOculto', off ? '1' : '0'); }catch(e){}
+  } else $('#side').classList.toggle('open');
+});
 
 /* ===== Pantalla de ingreso ===== */
 function mostrarGate(){ $('#gcargando').hidden = true; $('#gform').hidden = false; document.body.classList.add('locked'); }
@@ -549,7 +1034,7 @@ function programarRefresco(){
   clearTimeout(temporizador);
   temporizador = setTimeout(async () => {
     if(!S.uid) return;
-    if(dlg.open || document.activeElement?.id==='q'){ programarRefresco(); return; }
+    if(dlg.open || ['q','qn'].includes(document.activeElement?.id)){ programarRefresco(); return; }
     try{ await cargar(); dibujar(); }catch(e){}
   }, 800);
 }
@@ -560,6 +1045,7 @@ function iniciarTiempoReal(){
 }
 async function entrar(ses){
   S.uid = ses.user.id; S.cargando = true; S.error = '';
+  hechasCargar();
   S.vista = location.hash.slice(1) || 'inicio';
   document.body.classList.remove('locked'); dibujar();
   try{ await cargarPerfil(); await cargar(); }catch(e){ S.error = msg(e); }
@@ -570,6 +1056,9 @@ async function entrar(ses){
 function salir(){
   S.uid = null; S.rol = null; S.codigo = ''; S.nombre = ''; S.vista = 'inicio'; S.cargando = true; S.error = '';
   S.accesos = []; S.menu = []; S.noticias = []; S.materiales = []; S.bloques = [];
+  S.vistos = []; S.preguntas = []; S.perfiles = []; S.estado = null; S.omisiones = []; S.hechas = new Set();
+  if(alerta.open) alerta.close();
+  S.f = {q:'', cat:'', dia:''}; S.p = {dias:'30', cat:'', noticia:''};
   try{ sb.removeAllChannels(); }catch(e){}
   tiempoReal = false;
   if(dlg.open) dlg.close();
@@ -589,7 +1078,7 @@ function iniciar(){
     else if(ev==='INITIAL_SESSION') mostrarGate();
   }, 0); });
 }
-window.addEventListener('hashchange', () => { if(!S.uid) return; const id = location.hash.slice(1) || 'inicio'; if(id!==S.vista && (id==='inicio' || temaDe(id))) ir(id); });
+window.addEventListener('hashchange', () => { if(!S.uid) return; const id = location.hash.slice(1) || 'inicio'; if(id!==S.vista && (id==='inicio' || temaDe(id) || (id==='panel' && esF()))) ir(id); });
 iniciar();
 </script>
 </body>
