@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Centro de Formación | HITSS</title>
-<link rel="icon" type="image/svg+xml" href="marca.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&display=swap" rel="stylesheet">
@@ -416,6 +415,31 @@ async function mut(consulta){
 }
 
 /* ===== Carga de datos ===== */
+/* ===== Archivos privados: enlaces firmados temporales =====
+   El bucket "materiales" es PRIVADO. En la base de datos se sigue guardando la misma dirección
+   de siempre (sirve solo como identificador del archivo); al mostrarla se cambia por un enlace
+   firmado que caduca a las 2 horas y solo se entrega a quien tiene sesión iniciada. */
+const MARCA_PUB = `/storage/v1/object/public/${BUCKET}/`;
+const FIRMAS = new Map();
+const rutaDe = u => {
+  const i = (u || '').indexOf(MARCA_PUB); if(i < 0) return null;
+  const r = u.slice(i + MARCA_PUB.length).split('?')[0];
+  try{ return decodeURIComponent(r); }catch(e){ return r; }
+};
+const uf = u => FIRMAS.get(u) || u;
+async function firmarArchivos(){
+  try{
+    const urls = new Set();
+    S.materiales.forEach(m => { if(rutaDe(m.link)) urls.add(m.link); });
+    S.noticias.forEach(n => (n.adjuntos || []).forEach(a => { if(a && rutaDe(a.url)) urls.add(a.url); }));
+    const lista = [...urls]; if(!lista.length) return;
+    const {data, error} = await sb.storage.from(BUCKET).createSignedUrls(lista.map(rutaDe), 7200);
+    if(error || !data) return;
+    data.forEach((d, i) => { if(d && d.signedUrl) FIRMAS.set(lista[i], d.signedUrl); });
+  }catch(e){}
+}
+setInterval(async () => { if(!S.uid) return; await firmarArchivos(); dibujar(); }, 100 * 60 * 1000);
+
 async function cargar(){
   const ord = (t,c) => sb.from(t).select('*').order(c,{ascending:true});
   const [a,g,t,n,m,b,vi,pr,es,pf,om] = await Promise.all([
@@ -436,6 +460,7 @@ async function cargar(){
   if(fallo) throw fallo.error;
   S.accesos = a.data; S.noticias = n.data; S.materiales = m.data; S.bloques = b.data;
   S.vistos = vi.data; S.preguntas = pr.data; S.estado = es.data; S.perfiles = pf.data; S.omisiones = om.data;
+  await firmarArchivos();
   S.menu = g.data.map(x => ({...x, subs: t.data.filter(y=>y.grupo_id===x.id).map(y=>({id:y.id,nombre:y.nombre,desc:y.descr||'',orden:y.orden}))}));
   if(!temaDe(S.vista) && !(S.vista==='panel' && esF())) S.vista = 'inicio';
 }
@@ -489,7 +514,7 @@ function dibujarTicker(){
 function tarjetaMat(m){
   return `<article class="mat"><div class="ico ${esc(m.tipo)}">${m.tipo==='Enlace'?'WEB':esc(m.tipo.toUpperCase())}</div>
     <h3>${esc(m.titulo)}</h3><div class="meta">${esc(m.tipo)} · ${fecha(m.fecha)}</div>
-    <div class="acts"><a class="btn sm" href="${esc(m.link)}" target="_blank" rel="noopener">${m.tipo==='Enlace'?'Abrir':'Ver material'}</a>
+    <div class="acts"><a class="btn sm" href="${esc(uf(m.link))}" target="_blank" rel="noopener">${m.tipo==='Enlace'?'Abrir':'Ver material'}</a>
     ${esF()?`<button class="btn ghost sm" data-act="edit-mat" data-id="${m.id}">Editar</button><button class="btn danger sm" data-act="del-mat" data-id="${m.id}">Quitar</button>`:''}</div></article>`;
 }
 /* ===== Obligatorias, adjuntos y alerta ===== */
@@ -504,7 +529,7 @@ function adjuntosHTML(n){
   const a = (n.adjuntos || []).filter(x => x && urlOk(x.url));
   if(!a.length) return '';
   const esImg = x => /^image\//.test(x.tipo || '') || /\.(png|jpe?g|gif|webp)$/i.test(x.nombre || '');
-  return `<div class="adj">${a.filter(esImg).map(x => `<a href="${esc(x.url)}" target="_blank" rel="noopener" title="${esc(x.nombre)}"><img src="${esc(x.url)}" alt="${esc(x.nombre)}" loading="lazy"></a>`).join('')}${a.filter(x => !esImg(x)).map(x => `<a class="chipa" href="${esc(x.url)}" target="_blank" rel="noopener" title="${esc(x.nombre)}">📎 ${esc(x.nombre)}</a>`).join('')}</div>`;
+  return `<div class="adj">${a.filter(esImg).map(x => `<a href="${esc(uf(x.url))}" target="_blank" rel="noopener" title="${esc(x.nombre)}"><img src="${esc(uf(x.url))}" alt="${esc(x.nombre)}" loading="lazy"></a>`).join('')}${a.filter(x => !esImg(x)).map(x => `<a class="chipa" href="${esc(uf(x.url))}" target="_blank" rel="noopener" title="${esc(x.nombre)}">📎 ${esc(x.nombre)}</a>`).join('')}</div>`;
 }
 function etiquetasOblig(n){
   if(!n.obligatoria) return '';
@@ -1104,7 +1129,7 @@ function salir(){
   if(alerta.open) alerta.close();
   S.f = {q:'', cat:'', dia:''}; S.p = {dias:'30', cat:'', noticia:''};
   try{ sb.removeAllChannels(); }catch(e){}
-  tiempoReal = false;
+  tiempoReal = false; FIRMAS.clear();
   if(dlg.open) dlg.close();
   history.replaceState(null,'',location.pathname+location.search);
   $('#gform').reset(); $('#gform').clave.type = 'password'; gerr('');
@@ -1117,12 +1142,46 @@ function iniciar(){
     return;
   }
   sb.auth.onAuthStateChange((ev, ses) => { setTimeout(async () => {
-    if(ses && (ev==='SIGNED_IN' || ev==='INITIAL_SESSION')){ if(S.uid !== ses.user.id) await entrar(ses); }
+    if(ses && (ev==='SIGNED_IN' || ev==='INITIAL_SESSION')){
+      if(S.uid !== ses.user.id){
+        // Si la página se abre con una sesión guardada pero pasaron más de 10 min sin actividad, se cierra.
+        if(ev==='INITIAL_SESSION' && sesionCaducada()){ await sb.auth.signOut({scope:'local'}); return; }
+        if(ev==='SIGNED_IN') marcarActividad(true);
+        await entrar(ses);
+      }
+    }
     else if(ev==='SIGNED_OUT') salir();
     else if(ev==='INITIAL_SESSION') mostrarGate();
   }, 0); });
 }
 window.addEventListener('hashchange', () => { if(!S.uid) return; const id = location.hash.slice(1) || 'inicio'; if(id!==S.vista && (id==='inicio' || temaDe(id) || (id==='panel' && esF()))) ir(id); });
+/* ===== Cierre de sesión por inactividad (10 minutos) =====
+   Se guarda la hora de la última actividad (clic, tecla, mouse, scroll, toque). Se revisa cada 30 s,
+   al volver a la pestaña y al abrir la página, así también funciona si la computadora estuvo
+   dormida o la pestaña quedó abierta en segundo plano toda la noche. */
+const MIN_INACTIVIDAD = 10, CLAVE_ACT = 'hitss_ultima_actividad';
+let ultimaAct = Date.now(), ultimoGuardado = 0;
+function marcarActividad(forzar){
+  if(!S.uid && forzar !== true) return;
+  const t = Date.now(); ultimaAct = t;
+  if(forzar === true || t - ultimoGuardado > 5000){ ultimoGuardado = t; try{ localStorage.setItem(CLAVE_ACT, String(t)); }catch(e){} }
+}
+function actividadReciente(){
+  let t = ultimaAct;
+  try{ const g = Number(localStorage.getItem(CLAVE_ACT)); if(g > t) t = g; }catch(e){}
+  return t;
+}
+function sesionCaducada(){
+  try{ const g = Number(localStorage.getItem(CLAVE_ACT)); return !!g && Date.now() - g > MIN_INACTIVIDAD * 60 * 1000; }catch(e){ return false; }
+}
+async function revisarInactividad(){
+  if(!S.uid) return;
+  if(Date.now() - actividadReciente() > MIN_INACTIVIDAD * 60 * 1000) await sb.auth.signOut({scope:'local'});
+}
+['click','keydown','mousemove','scroll','touchstart'].forEach(ev => window.addEventListener(ev, () => marcarActividad(), {passive:true}));
+setInterval(revisarInactividad, 30 * 1000);
+document.addEventListener('visibilitychange', () => { if(!document.hidden) revisarInactividad(); });
+
 iniciar();
 </script>
 </body>
