@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Centro de Formación | HITSS</title>
-<link rel="icon" type="image/svg+xml" href="marca.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&display=swap" rel="stylesheet">
@@ -827,13 +826,13 @@ const dlg = $('#dlg');
 function form(titulo, campos, guardar, vals={}){
   dlg.innerHTML = `<form class="dlg"><h3>${esc(titulo)}</h3>` + campos.map(c => {
     const v = vals[c.k] ?? c.def ?? '';
-    if(c.t==='area') return `<label>${c.l}<textarea name="${c.k}" ${c.req?'required':''} placeholder="${esc(c.p||'')}">${esc(v)}</textarea></label>`;
-    if(c.t==='sel') return `<label>${c.l}<select name="${c.k}">${c.o.map(o=>`<option ${o===v?'selected':''}>${esc(o)}</option>`).join('')}</select></label>`;
-    if(c.t==='chk') return `<label class="chk"><input type="checkbox" name="${c.k}" ${v?'checked':''}>${c.l}</label>`;
-    if(c.t==='file') return `<label>${c.l}<input type="file" name="${c.k}" accept="${c.acc||''}"></label>`;
-    if(c.t==='files') return `<label>${c.l}<input type="file" name="${c.k}" accept="${c.acc||''}" multiple></label>`;
-    if(c.t==='checks') return `<fieldset class="chks"><legend>${c.l}</legend>${c.o.map(([val,lab]) => `<label class="chk"><input type="checkbox" name="${c.k}" value="${esc(val)}">${esc(lab)}</label>`).join('')}</fieldset>`;
-    return `<label>${c.l}<input name="${c.k}" type="${c.t||'text'}" value="${esc(v)}" ${c.req?'required':''} placeholder="${esc(c.p||'')}"></label>`;
+    if(c.t==='area') return `<label>${esc(c.l)}<textarea name="${c.k}" ${c.req?'required':''} placeholder="${esc(c.p||'')}">${esc(v)}</textarea></label>`;
+    if(c.t==='sel') return `<label>${esc(c.l)}<select name="${c.k}">${c.o.map(o=>`<option ${o===v?'selected':''}>${esc(o)}</option>`).join('')}</select></label>`;
+    if(c.t==='chk') return `<label class="chk"><input type="checkbox" name="${c.k}" ${v?'checked':''}>${esc(c.l)}</label>`;
+    if(c.t==='file') return `<label>${esc(c.l)}<input type="file" name="${c.k}" accept="${c.acc||''}"></label>`;
+    if(c.t==='files') return `<label>${esc(c.l)}<input type="file" name="${c.k}" accept="${c.acc||''}" multiple></label>`;
+    if(c.t==='checks') return `<fieldset class="chks"><legend>${esc(c.l)}</legend>${c.o.map(([val,lab]) => `<label class="chk"><input type="checkbox" name="${c.k}" value="${esc(val)}">${esc(lab)}</label>`).join('')}</fieldset>`;
+    return `<label>${esc(c.l)}<input name="${c.k}" type="${c.t||'text'}" value="${esc(v)}" ${c.req?'required':''} placeholder="${esc(c.p||'')}"></label>`;
   }).join('') + `<p class="err" id="ferr" hidden></p><div class="row"><button class="btn ghost" type="button" data-close>Cancelar</button><button class="btn" type="submit">Guardar</button></div></form>`;
   const fm = dlg.querySelector('form');
   fm.addEventListener('submit', async e => {
