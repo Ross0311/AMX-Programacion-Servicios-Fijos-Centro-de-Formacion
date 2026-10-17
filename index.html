@@ -4,11 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AMX Programación Servicios Fijos | Centro de Formación</title>
-<link rel="icon" type="image/svg+xml" href="marca.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&display=swap" rel="stylesheet">
-<style>:root{--navy:#111111;--navy2:#1E1E1E;--teal:#D7192D;--teal-soft:#FCE8EA;--amber:#D7192D;--amber-soft:#FCE8EA;--red:#B3121F;--red-soft:#FBE4E6;--paper:#F4F4F5;--white:#fff;--ink:#111111;--muted:#5F6368;--line:#E2E2E5;--head:'Newsreader',Georgia,'Times New Roman',serif;--body:'Figtree','Segoe UI',Arial,sans-serif;--side:288px}
+<style>:root{--navy:#0B2447;--navy2:#13386F;--teal:#1E63D6;--teal-soft:#E3EDFC;--amber:#D97706;--amber-soft:#FFF0D3;--red:#D63B3B;--red-soft:#FBE4E4;--paper:#F2F5F8;--white:#fff;--ink:#121B30;--muted:#5A6682;--line:#DCE3EC;--head:'Newsreader',Georgia,'Times New Roman',serif;--body:'Figtree','Segoe UI',Arial,sans-serif;--side:288px}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--body);background:var(--paper);color:var(--ink);line-height:1.55}
 button{font-family:inherit;cursor:pointer}
@@ -81,7 +80,7 @@ h1{font-family:var(--head);font-size:clamp(30px,4vw,44px);line-height:1.1;font-w
 h2{font-family:var(--head);font-size:26px;font-weight:700;margin:36px 0 16px;letter-spacing:-.3px}
 .news{display:grid;grid-template-columns:1.5fr 1fr;gap:22px}
 .hero-n{background:var(--navy);color:#fff;border-radius:20px;padding:34px;display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden;min-height:340px}
-.hero-n::after{content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;border-radius:50%;border:38px solid rgba(215,25,45,.35)}
+.hero-n::after{content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;border-radius:50%;border:38px solid rgba(30,99,214,.35)}
 .hero-n > *{position:relative;z-index:1}
 .hero-n h3{font-family:var(--head);font-size:clamp(26px,3vw,36px);line-height:1.15;font-weight:700;margin-top:auto;max-width:22ch}
 .hero-n p{color:#C6D2EC;max-width:52ch}
@@ -100,7 +99,7 @@ h2{font-family:var(--head);font-size:26px;font-weight:700;margin:36px 0 16px;let
 .mat:hover{transform:translateY(-3px);box-shadow:0 16px 30px -20px rgba(14,26,54,.5)}
 .ico{width:46px;height:54px;border-radius:8px;display:grid;place-items:center;font-weight:800;font-size:13px;color:#fff;background:var(--teal);position:relative}
 .ico::after{content:"";position:absolute;right:0;top:0;border-style:solid;border-width:0 14px 14px 0;border-color:transparent rgba(255,255,255,.55) transparent transparent}
-.ico.Flyer{background:#111;color:#fff}
+.ico.Flyer{background:#0B2447;color:#fff}
 .ico.Enlace{background:#6B6B70}
 .mat h3{font-size:16.5px;line-height:1.35;font-weight:700}
 .mat .meta{margin-top:-6px}
@@ -309,7 +308,7 @@ dialog::backdrop{background:rgba(14,26,54,.7);backdrop-filter:blur(4px)}
 .leyE{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;margin:6px 0 10px}
 .leyE span::before{content:"";display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;background:var(--c)}
 .chipE{display:inline-block;font-size:12.5px;font-weight:700;border-radius:999px;padding:3px 11px;background:var(--paper);color:var(--ink)}
-.chipE.e-activo{background:#111;color:#fff}
+.chipE.e-activo{background:#0B2447;color:#fff}
 .chipE.e-capacitacion{background:var(--teal);color:#fff}
 .chipE.e-break{background:#F8D3D7;color:#8B0F1C}
 .chipE.e-bano{background:#E4E4E7;color:#333}
@@ -361,10 +360,10 @@ dialog::backdrop{background:rgba(14,26,54,.7);backdrop-filter:blur(4px)}
 #aviso-pausa ul{margin:10px 0 0 18px;display:flex;flex-direction:column;gap:6px}
 #aviso-pausa .btn{align-self:flex-end;font-size:16px;padding:12px 26px}
 .sec-nav{display:flex;flex-wrap:wrap;gap:10px;margin:-6px 0 8px}
-.sec-chip{border:none;border-radius:999px;padding:10px 18px;font:700 14.5px var(--body);cursor:pointer;color:#fff;background:var(--sc,#111)}
-.sec{--sc:#111;scroll-margin-top:90px}
+.sec-chip{border:none;border-radius:999px;padding:10px 18px;font:700 14.5px var(--body);cursor:pointer;color:#fff;background:var(--sc,#0B2447)}
+.sec{--sc:#0B2447;scroll-margin-top:90px}
 .s-conectividad{--sc:#1E9E5A}
-.s-noticias{--sc:#D7192D}
+.s-noticias{--sc:#0B2447}
 .s-examenes{--sc:#2563EB}
 .s-alertas{--sc:#D97706}
 .sec-tit{display:flex;align-items:center;gap:16px;margin:34px 0 18px;padding:18px 22px;border-radius:18px;background:linear-gradient(100deg,var(--sc) 0%,color-mix(in srgb,var(--sc) 55%,#000) 100%);color:#fff;box-shadow:0 10px 26px rgba(0,0,0,.14)}
@@ -382,7 +381,7 @@ dialog::backdrop{background:rgba(14,26,54,.7);backdrop-filter:blur(4px)}
 .rq-ab{width:100%;min-height:130px;font:500 15.5px var(--body);padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:#fff;resize:vertical}
 .rq-ab:focus{outline:none;border-color:var(--teal)}
 .btn.calif{background:#7C3AED;border-color:#7C3AED;color:#fff}
-.btn.herr{background:#111;border-color:#111;color:#fff}
+.btn.herr{background:#0B2447;border-color:#0B2447;color:#fff}
 .calif-aviso{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .coment-f{font-size:14px;background:var(--paper);border-left:4px solid #7C3AED;border-radius:8px;padding:8px 12px;margin:4px 0}
 .nota.pendn{font-size:54px}
@@ -596,7 +595,7 @@ footer{padding:22px 16px}
 const DOMINIO='formacion.example.com';const emailDe=codigo=>`${codigo}@${DOMINIO}`;const configurado=!SUPABASE_URL.startsWith('PEGA_')&&!SUPABASE_KEY.startsWith('PEGA_');
 const sb=configurado?supabase.createClient(SUPABASE_URL,SUPABASE_KEY):null;const S={cargando:true,error:'',uid:null,codigo:'',nombre:'',rol:null,vista:'inicio',
 accesos:[],menu:[],cats:[],noticias:[],materiales:[],bloques:[],vistos:[],preguntas:[],perfiles:[],estado:null,omisiones:[],hechas:new Set(),f:{q:'',cat:'',
-dia:''},p:{dias:'30',cat:'',noticia:''},abiertos:{}};const CATS=['Activaciones','Validaciones','Programación','Seguimiento'];const COL_CAT={'Activaciones':'#D7192D','Validaciones':'#111111','Programación':'#F5A524','Seguimiento':'#8A8A90'};const ROLES={asesor:'Asesor',gtr:'GTR',supervisor:'Supervisor',coordinador:'Coordinador',formador:'Formador',todopoderoso:'Todopoderoso'};
+dia:''},p:{dias:'30',cat:'',noticia:''},abiertos:{}};const CATS=['Activaciones','Validaciones','Programación','Seguimiento'];const COL_CAT={'Activaciones':'#1E63D6','Validaciones':'#0B2447','Programación':'#F5A524','Seguimiento':'#8A8A90'};const ROLES={asesor:'Asesor',gtr:'GTR',supervisor:'Supervisor',coordinador:'Coordinador',formador:'Formador',todopoderoso:'Todopoderoso'};
 const ORDEN_ROL=['todopoderoso','formador','supervisor','gtr','coordinador','asesor'];const AREAS_EQUIPO={'amazonas':'Amazonas','ancash':'Áncash','apurimac':'Apurímac','arequipa':'Arequipa','ayacucho':'Ayacucho','cajamarca':'Cajamarca','cusco':'Cusco','huancavelica':'Huancavelica','huanuco':'Huánuco','ica':'Ica','junin':'Junín','la-libertad':'La Libertad','lambayeque':'Lambayeque','loreto':'Loreto','madre-de-dios':'Madre de Dios','moquegua':'Moquegua','pasco':'Pasco','piura':'Piura','puno':'Puno','san-martin':'San Martín','tacna':'Tacna','tumbes':'Tumbes','ucayali':'Ucayali','callao':'Callao','lima':'Lima'};const AREAS={...AREAS_EQUIPO,general:'General (ve todo)'};const REGIONES={sur:'Sur',centro:'Centro',norte:'Norte',lima:'Lima'};const enAlcance=(ar,m)=>ar==='todos'||m.area===ar||('r:'+(m.region||'-'))===ar;const enArea=(m,ea)=>!ea||m.area===ea||('r:'+(m.region||'-'))===ea;const ROL_GENERAL=['todopoderoso',
 'formador','supervisor','gtr'];const CON_SUPERVISOR=['asesor','coordinador'];const esJefe=()=>S.rol==='supervisor'||S.rol==='coordinador';
 const esGTR=()=>S.rol==='gtr';const esCoord=()=>S.rol==='coordinador';const veTodo=()=>ROL_GENERAL.includes(S.rol);const esPanel=()=>esF()||esJefe()||esGTR();
@@ -1028,7 +1027,7 @@ btn.textContent='Ingresar';if(error)gerr(msg(error));else f.clave.value='';});$(
 const idDe=(arr,t)=>(arr.find(x=>x.t===t)||{}).id||null;const claveDe=(obj,v)=>Object.keys(obj).find(k=>obj[k]===v)||null;Object.assign(S,{examenes:[],
 intentos:[],estadoMio:null,area:null,region:null,enExamen:false,sinExamenes:false});const ESTADOS=[['activo','Activo'],['bano','Baño'],['break','Break'],['capacitacion',
 'Capacitación'],['feedback','Feedback'],['reunion','Reunión']];const EST_NOM={activo:'Activo',bano:'Baño',break:'Break',capacitacion:'Capacitación',feedback:'Feedback',
-reunion:'Reunión',desconectado:'Desconectado'};const EST_COL={activo:'#111111',bano:'#8A8A90',break:'#E8707B',capacitacion:'#D7192D',feedback:'#0891B2',
+reunion:'Reunión',desconectado:'Desconectado'};const EST_COL={activo:'#0B2447',bano:'#8A8A90',break:'#E8707B',capacitacion:'#7C3AED',feedback:'#0891B2',
 reunion:'#D97706'};const EST_ORD=['activo','bano','break','capacitacion','feedback','reunion'];const AREA_EX={todos:'Todas las áreas','r:sur':'Región Sur','r:centro':'Región Centro','r:norte':'Región Norte','r:lima':'Región Lima',...AREAS_EQUIPO};const fmtS=s=>{const t=Math.max(0,Math.round(Number(s||0))),h=Math.floor(t/3600),m=Math.floor(t%3600/60),
 x=t%60,d2=n=>String(n).padStart(2,'0');return h?`${h} h ${d2(m)} min ${d2(x)} s`:m?`${m} min ${d2(x)} s`:`${x} s`;};const hms=s=>{const t=Math.max(0,Math.round(Number(s||0)));
 return Math.floor(t/3600)+':'+String(Math.floor(t%3600/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');};const porCodigo=(a,b)=>(a.codigo||'').localeCompare(b.codigo||'');
