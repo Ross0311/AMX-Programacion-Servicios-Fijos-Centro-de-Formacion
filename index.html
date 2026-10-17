@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AMX Programación Servicios Fijos | Centro de Formación</title>
-<link rel="icon" type="image/svg+xml" href="marca.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&display=swap" rel="stylesheet">
@@ -1353,7 +1352,7 @@ l])=>({k,nombre:k==='sin'?'Sin coordinador':nomCoord(l[0]),area:k==='sin'?'':(pe
 }
 const puedeCambiarEstadoDe=(p,e)=>e!=='desconectado'&&p.id!==S.uid&&(esTodo()||(esCoord()&&p.rol==='asesor'));const hoyLima=()=>new Intl.DateTimeFormat('en-CA',
 {timeZone:'America/Lima'}).format(new Date());const diaLima=iso=>new Intl.DateTimeFormat('en-CA',{timeZone:'America/Lima'}).format(new Date(iso));const MOTIVOS=()=>Object.keys(COD).filter(k=>k!=='A');
-const noSeConectoHoy=r=>!r||!r.ultimo_latido||diaLima(r.ultimo_latido)<hoyLima();const puedeMotivo=m=>esF()||esGTR()||(esCoord()&&m.rol==='asesor');function celdaMotivo(m,
+const noSeConectoHoy=r=>!r||!r.ultimo_latido||diaLima(r.ultimo_latido)<hoyLima();const puedeMotivo=m=>(m.rol==='formador'||m.rol==='gtr')?esTodo():(esF()||esGTR()||(esCoord()&&m.rol==='asesor'));function celdaMotivo(m,
 e,r){if(e!=='desconectado'||!noSeConectoHoy(r))return'';const mt=(S.est.motivos||new Map()).get(m.id);if(puedeMotivo(m))return`<select data-motivo="${m.id}" class="sel-motivo ${mt?'':'falta'}" aria-label="Motivo de no conexión">
       <option value="">— Elegir motivo —</option>${MOTIVOS().map(k=>`<option value="${k}" ${mt&&mt.codigo===k?'selected':''}>${esc(COD[k].n)}</option>`).join('')}</select>`;
 return mt?`<span class="chipE e-desconectado" title="Registrado por ${esc(mt.por_nombre||'')}">${esc(COD[mt.codigo]?COD[mt.codigo].n:mt.codigo)}</span>`:'<span class="meta">Sin motivo</span>';
@@ -1540,9 +1539,9 @@ function pintarAlertas(){const el=$('#pnl-alertas');if(!el||!S.est.ok)return;con
 ...coordsEst(),...staffEst()]:miembrosEst())||'<p class="meta">No se pudieron cargar las alertas.</p>';const sc2=el.querySelector('.scroll');if(sc2)sc2.scrollTop=top;
 }
 function staffVivoHTML(){const vm=mapaVivo(),filas=staffEst().map(p=>({p,...estadoAhora(vm.get(p.id))})).sort((a,b)=>EST_VIVO.indexOf(a.e)-EST_VIVO.indexOf(b.e)||(a.p.nombre||'').localeCompare(b.p.nombre||''));
-return`<div class="scroll" style="max-height:300px"><table class="tb"><thead><tr><th>Persona</th><th>Rol</th><th>Estado ahora</th><th>Desde</th><th class="num">Tiempo</th>${esTodo()?'<th></th>':''}</tr></thead><tbody>
+return`<div class="scroll" style="max-height:300px"><table class="tb"><thead><tr><th>Persona</th><th>Rol</th><th>Estado ahora</th><th>Desde</th><th class="num">Tiempo</th><th>Motivo (no se conectó hoy)</th>${esTodo()?'<th></th>':''}</tr></thead><tbody>
     ${filas.map(f=>`<tr><td>${esc(quien(f.p))}${f.p.id===S.uid?' <small class="meta">(tú)</small>':''}</td><td>${esc(ROLES[f.p.rol])}</td><td><span class="chipE e-${f.e}">${EST_NOM[f.e]}</span></td><td>${horaDesde(f.desde,
-f.e)}</td>${celdaTiempo(f.desde,f.e)}${esTodo()?`<td>${btnCambio(f.p,f.e)}</td>`:''}</tr>`).join('')||'<tr><td colspan="6">No hay formadores ni GTR.</td></tr>'}
+f.e)}</td>${celdaTiempo(f.desde,f.e)}<td>${celdaMotivo(f.p,f.e,vm.get(f.p.id))}</td>${esTodo()?`<td>${btnCambio(f.p,f.e)}</td>`:''}</tr>`).join('')||'<tr><td colspan="7">No hay formadores ni GTR.</td></tr>'}
     </tbody></table></div>`;}
 Object.assign(ACC,{estado:id=>cambiarEstado(id),'est-menu':()=>{estMenuAbierto=!estMenuAbierto;dibujarTop();},cobertura:()=>{if(esTodo())coberturaDlg();
 },'cob-dar':async id=>{const v=$('#cob-h-'+id).value;if(!v)return alert('Elige hasta qué fecha y hora.');const{error}=await sb.rpc('asignar_cobertura',
