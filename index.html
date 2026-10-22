@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AMX Programación Servicios Fijos | Centro de Formación</title>
-<link rel="icon" type="image/svg+xml" href="marca.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&display=swap" rel="stylesheet">
@@ -537,7 +536,7 @@ footer{padding:22px 16px}
 @media (prefers-reduced-motion:reduce){.ticker .run{animation:none}
 *{transition:none!important}
 .envivo::before{animation:none}
-}.ordlist{display:flex;flex-direction:column;gap:6px;margin:12px 0}.orden-row{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:#fff}.orden-row b{flex:1;font-weight:600;font-size:14.5px}.orden-row .btn{min-width:38px}.cod.auto{outline:1.5px dashed rgba(0,0,0,.4);outline-offset:-2px}</style>
+}.ordlist{display:flex;flex-direction:column;gap:6px;margin:12px 0}.orden-row{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:#fff}.orden-row b{flex:1;font-weight:600;font-size:14.5px}.orden-row .btn{min-width:38px}.cod.auto{outline:1.5px dashed rgba(0,0,0,.4);outline-offset:-2px}.page.ancha{max-width:none}</style>
 </head>
 <body class="locked">
 <section class="gate" id="gate">
@@ -833,7 +832,7 @@ const lista=S.materiales.filter(m=>m.tema_id===t.id&&(m.titulo+' '+m.tipo).toLow
     ${lista.length?`<h2>Archivos y enlaces</h2><div class="grid">${lista.map(tarjetaMat).join('')}</div>`:''}
     ${(!bl.length&&!lista.length)?`<div class="empty"><b>${q?'Sin resultados para esa búsqueda':'No hay contenido aquí todavía'}</b>${q?'Prueba con otra palabra.':(esF()?'Usa los botones de arriba para agregar el primero.':'Un formador lo publicará pronto.')}</div>`:''}`;
 }
-function dibujar(){dibujarMenu();dibujarTop();if(S.cargando){$('#ticker').innerHTML='';$('#main').innerHTML='<div class="empty"><b>Cargando…</b>Un momento, por favor.</div>';
+function dibujar(){const mm=$('#main');if(mm)mm.classList.toggle('ancha',S.vista==='panel');dibujarMenu();dibujarTop();if(S.cargando){$('#ticker').innerHTML='';$('#main').innerHTML='<div class="empty"><b>Cargando…</b>Un momento, por favor.</div>';
 return;}
 if(S.error){$('#ticker').innerHTML='';$('#main').innerHTML=`<div class="empty"><b>No se pudo cargar el contenido</b>${esc(S.error)}</div>`;return;}
 dibujarTicker();if(S.vista==='examenes'&&!menuExamenes())S.vista='inicio';const t=temaDe(S.vista);if(['asistencia','horario'].includes(S.vista)&&!veAsistencia())S.vista='inicio';
@@ -1067,7 +1066,7 @@ e.stopPropagation();let z=$('#zoomd');if(!z){z=document.createElement('dialog');
 z.innerHTML=`<img src="${esc(im.src)}" alt="${esc(im.alt||'')}"><p>${esc(im.alt||'')} · clic para cerrar</p>`;if(!z.open)z.showModal();},true);async function marcarDesconectado(){
 if(S.uid&&tieneEstado()){try{await sb.rpc('cambiar_estado',{p_estado:'desconectado'});}catch(e){}}}
 const MANTENER_PANTALLA=true;let ultimoLatido=0,ultimoTick=Date.now(),fallosLatido=0,wakeLock=null;async function latir(){if(!S.uid||!tieneEstado())return;
-ultimoLatido=Date.now();try{const{data,error}=await sb.rpc('latido');if(error)throw error;fallosLatido=0;avisoConexion('red',false);if(data&&data!=='desconectado')sincronizarMiEstado(data);
+ultimoLatido=Date.now();try{let rl=await sb.rpc('latido',{p_sesion:S.sesionId});if(rl.error&&/latido/.test(rl.error.message||'')&&/(find|function|schema cache)/i.test(rl.error.message||''))rl=await sb.rpc('latido');const{data,error}=rl;if(error)throw error;if(data==='sesion_reemplazada'){cerrarPorReemplazo();return;}fallosLatido=0;avisoConexion('red',false);if(data&&data!=='desconectado')sincronizarMiEstado(data);
 if(data==='desconectado'&&S.estadoMio&&S.estadoMio.estado!=='desconectado'){await cargarHorario();if(S.uid&&!S.salidaPendiente){if(await desconexionAjena()){
 forzarSalida(MSG_DESC_AJENA);return;}
 await iniciarEstado();dibujarTop();}}}catch(e){if(++fallosLatido>=2)avisoConexion('red',true);}}
@@ -1318,14 +1317,14 @@ function miembrosEst(){return miembros().filter(m=>enArea(m,S.p.ea)&&(!S.p.ec||(
 }
 function coordsEst(){if(!veTodo()||S.p.ec==='sin')return[];return S.perfiles.filter(p=>p.rol==='coordinador'&&enArea(p,S.p.ea)&&(!S.p.ec||p.id===S.p.ec)).sort((a,
 b)=>(a.nombre||a.codigo||'').localeCompare(b.nombre||b.codigo||''));}
-const aCargo=c=>S.perfiles.filter(p=>p.rol==='asesor'&&p.coordinador_id===c.id).length;const celdaPrimera=(id,desde,e)=>{let p=S.primera&&S.primera.get(id);if(!p&&desde&&e!=='desconectado'&&diaLima(desde)===hoyLima())p=desde;return p?`<td class="num"><b>${esc(new Date(p).toLocaleTimeString('es-PE',{hour:'numeric',minute:'2-digit',hour12:true}))}</b></td>`:'<td class="num">—</td>';};const celdaTiempo=(desde,e)=>desde&&e!=='desconectado'?`<td class="num" data-desde="${esc(desde)}">${fmtS((Date.now()-new Date(desde).getTime())/1000)}</td>`:'<td class="num">—</td>';
+const aCargo=c=>S.perfiles.filter(p=>p.rol==='asesor'&&p.coordinador_id===c.id).length;const primeraDe=(id,desde,e)=>{let p=S.primera&&S.primera.get(id);if(!p&&desde&&e!=='desconectado'&&diaLima(desde)===hoyLima())p=desde;return p||null;};const celdaPrimera=(id,desde,e)=>{const p=primeraDe(id,desde,e);return p?`<td class="num"><b>${esc(new Date(p).toLocaleTimeString('es-PE',{hour:'numeric',minute:'2-digit',hour12:true}))}</b></td>`:'<td class="num">—</td>';};const celdaConectado=(id,desde,e)=>{const p=e!=='desconectado'?primeraDe(id,desde,e):null;return p?`<td class="num" data-desde="${esc(p)}">${fmtS((Date.now()-new Date(p).getTime())/1000)}</td>`:'<td class="num">—</td>';};const celdaTiempo=(desde,e)=>desde&&e!=='desconectado'?`<td class="num" data-desde="${esc(desde)}">${fmtS((Date.now()-new Date(desde).getTime())/1000)}</td>`:'<td class="num">—</td>';
 const horaDesde=(desde,e)=>desde&&e!=='desconectado'?esc(new Date(desde).toLocaleTimeString('es-PE',{hour:'numeric',minute:'2-digit',hour12:true})):desde?'Últ. vez '+esc(fechaHora(desde)):'—';
 function coordVivoHTML(cs){const vm=mapaVivo(),ah=alertaHoy();const filas=cs.map(c=>({c,...estadoAhora(vm.get(c.id))})).sort((a,b)=>EST_VIVO.indexOf(a.e)-EST_VIVO.indexOf(b.e)||(a.c.nombre||'').localeCompare(b.c.nombre||''));
 const cuenta={};filas.forEach(f=>{cuenta[f.e]=(cuenta[f.e]||0)+1;});return`<div class="vivo">${EST_VIVO.map(k=>`<span class="chipE e-${k}">${EST_NOM[k]}: ${cuenta[k]||0}</span>`).join('')}</div>
-    <div class="scroll" style="max-height:300px"><table class="tb"><thead><tr><th>Coordinador</th><th>Área</th><th class="num">Asesores a cargo</th><th>Estado ahora</th><th>Desde</th><th class="num" title="Hora en que se conectó por primera vez hoy">Conectado desde (hoy)</th>${esTodo()?'<th></th>':''}</tr></thead><tbody>
+    <div class="scroll" style="max-height:300px"><table class="tb"><thead><tr><th>Coordinador</th><th>Área</th><th class="num">Asesores a cargo</th><th>Estado ahora</th><th>Desde</th><th class="num" title="Cuánto lleva en el estado actual (por ejemplo, en Baño)">Tiempo en el estado</th><th class="num" title="Hora en que se conectó por primera vez hoy">Conectado desde (hoy)</th><th class="num" title="Tiempo transcurrido desde su primera conexión de hoy">Tiempo conectado hoy</th>${esTodo()?'<th></th>':''}</tr></thead><tbody>
     ${filas.map(f=>`<tr><td>${esc(quien(f.c))}${ah.has(f.c.id)?' <span class="chipE e-capacitacion" title="Tiene una alerta de acceso desde celular pendiente">📱 Alerta</span>':''}</td><td>${esc(NOM_AREA_C[f.c.area]||'Sin área')}</td><td class="num">${aCargo(f.c)}</td>
-      <td><span class="chipE e-${f.e}">${EST_NOM[f.e]}</span></td><td>${horaDesde(f.desde,f.e)}</td>${celdaPrimera(f.c.id,f.desde,f.e)}${esTodo()?`<td>${btnCambio(f.c,
-f.e)}</td>`:''}</tr>`).join('')||'<tr><td colspan="7">No hay coordinadores con estos filtros.</td></tr>'}
+      <td><span class="chipE e-${f.e}">${EST_NOM[f.e]}</span></td><td>${horaDesde(f.desde,f.e)}</td>${celdaTiempo(f.desde,f.e)}${celdaPrimera(f.c.id,f.desde,f.e)}${celdaConectado(f.c.id,f.desde,f.e)}${esTodo()?`<td>${btnCambio(f.c,
+f.e)}</td>`:''}</tr>`).join('')||'<tr><td colspan="9">No hay coordinadores con estos filtros.</td></tr>'}
     </tbody></table></div>`;}
 function coordPeriodoHTML(cs){const tm=totalesPorPersona();return cs.map(c=>{const t=tm.get(c.id)||{},tot=totalDe(t);return`<tr><td>${esc(quien(c))}</td><td>${esc(NOM_AREA_C[c.area]||'Sin área')}</td>${EST_ORD.map(k=>`<td class="num">${t[k]?fmtS(t[k]):'—'}</td>`).join('')}<td class="num"><b>${tot?fmtS(tot):'—'}</b></td><td class="num">${tot?pctAct(t)+'%':'—'}</td></tr>`;
 }).join('')||`<tr><td colspan="${EST_ORD.length+4}">No hay coordinadores con estos filtros.</td></tr>`;}
@@ -1366,11 +1365,11 @@ sinMot=sinHoy.filter(f=>!(S.est.motivos||new Map()).has(f.m.id)).length;const co
 b)=>(a.nombre||a.codigo||'').localeCompare(b.nombre||b.codigo||'')):[];return`<div class="vivo">${EST_VIVO.map(k=>`<span class="chipE e-${k}">${EST_NOM[k]}: ${cuenta[k]||0}</span>`).join('')}
       ${sinHoy.length?`<span class="chipE ${sinMot?'falta-mot':'e-desconectado'}">No se conectaron hoy: ${sinHoy.length}${sinMot?' · sin motivo: '+sinMot:''}</span>`:''}
       ${V?`<select id="pec-v" class="sel-mini" aria-label="Filtrar por coordinador"><option value="">Todos los coordinadores</option><option value="sin" ${S.p.ec==='sin'?'selected':''}>Sin coordinador</option>${coordsF.map(c=>`<option value="${c.id}" ${S.p.ec===c.id?'selected':''}>${esc(c.nombre||c.codigo)}</option>`).join('')}</select>`:''}</div>
-    <div class="scroll" style="max-height:340px"><table class="tb"><thead><tr><th>Asesor</th>${V?'<th>Área</th><th>Coordinador</th>':''}<th>Estado ahora</th><th>Desde</th><th class="num" title="Hora en que se conectó por primera vez hoy">Conectado desde (hoy)</th><th>Motivo (no se conectó hoy)</th>${esTodo()||esCoord()?'<th></th>':''}</tr></thead><tbody>
+    <div class="scroll" style="max-height:340px"><table class="tb"><thead><tr><th>Asesor</th>${V?'<th>Área</th><th>Coordinador</th>':''}<th>Estado ahora</th><th>Desde</th><th class="num" title="Cuánto lleva en el estado actual (por ejemplo, en Baño)">Tiempo en el estado</th><th class="num" title="Hora en que se conectó por primera vez hoy">Conectado desde (hoy)</th><th class="num" title="Tiempo transcurrido desde su primera conexión de hoy">Tiempo conectado hoy</th><th>Motivo (no se conectó hoy)</th>${esTodo()||esCoord()?'<th></th>':''}</tr></thead><tbody>
     ${filas.map(f=>`<tr><td>${esc(quien(f.m))}${ah.has(f.m.id)?' <span class="chipE e-capacitacion" title="Tiene una alerta de acceso desde celular pendiente">📱 Alerta</span>':''}</td>${V?`<td>${esc(NOM_AREA_C[f.m.area]||'Sin área')}</td><td>${esc(nomCoord(f.m))}</td>`:''}
       <td><span class="chipE e-${f.e}">${EST_NOM[f.e]}</span></td>
-      <td>${horaDesde(f.desde,f.e)}</td>${celdaPrimera(f.m.id,f.desde,f.e)}<td>${celdaMotivo(f.m,f.e,vm.get(f.m.id))}</td>${esTodo()||esCoord()?`<td>${btnCambio(f.m,
-f.e)}</td>`:''}</tr>`).join('')||`<tr><td colspan="${V?8:6}">No hay asesores con estos filtros.</td></tr>`}
+      <td>${horaDesde(f.desde,f.e)}</td>${celdaTiempo(f.desde,f.e)}${celdaPrimera(f.m.id,f.desde,f.e)}${celdaConectado(f.m.id,f.desde,f.e)}<td>${celdaMotivo(f.m,f.e,vm.get(f.m.id))}</td>${esTodo()||esCoord()?`<td>${btnCambio(f.m,
+f.e)}</td>`:''}</tr>`).join('')||`<tr><td colspan="${V?10:8}">No hay asesores con estos filtros.</td></tr>`}
     </tbody></table></div>`;}
 function resumenHTML(titulo,filas){return`<section class="card" style="margin-bottom:18px"><h3>${titulo}</h3>
     <div class="scroll"><table class="tb"><thead><tr><th>${titulo.includes('coordinador')?'Coordinador':titulo.includes('región')?'Región':'Departamento'}</th><th class="num">Asesores</th><th class="num">Activos ahora</th><th class="num">En pausa ahora</th><th class="num">Desconectados</th>${EST_ORD.map(k=>`<th class="num">${EST_NOM[k]}</th>`).join('')}<th class="num">Total</th><th class="num">% Activo</th></tr></thead><tbody>
@@ -1537,9 +1536,9 @@ function pintarAlertas(){const el=$('#pnl-alertas');if(!el||!S.est.ok)return;con
 ...coordsEst(),...staffEst()]:miembrosEst())||'<p class="meta">No se pudieron cargar las alertas.</p>';const sc2=el.querySelector('.scroll');if(sc2)sc2.scrollTop=top;
 }
 function staffVivoHTML(){const vm=mapaVivo(),filas=staffEst().map(p=>({p,...estadoAhora(vm.get(p.id))})).sort((a,b)=>EST_VIVO.indexOf(a.e)-EST_VIVO.indexOf(b.e)||(a.p.nombre||'').localeCompare(b.p.nombre||''));
-return`<div class="scroll" style="max-height:300px"><table class="tb"><thead><tr><th>Persona</th><th>Rol</th><th>Estado ahora</th><th>Desde</th><th class="num" title="Hora en que se conectó por primera vez hoy">Conectado desde (hoy)</th><th>Motivo (no se conectó hoy)</th>${esTodo()?'<th></th>':''}</tr></thead><tbody>
+return`<div class="scroll" style="max-height:300px"><table class="tb"><thead><tr><th>Persona</th><th>Rol</th><th>Estado ahora</th><th>Desde</th><th class="num" title="Cuánto lleva en el estado actual (por ejemplo, en Baño)">Tiempo en el estado</th><th class="num" title="Hora en que se conectó por primera vez hoy">Conectado desde (hoy)</th><th class="num" title="Tiempo transcurrido desde su primera conexión de hoy">Tiempo conectado hoy</th><th>Motivo (no se conectó hoy)</th>${esTodo()?'<th></th>':''}</tr></thead><tbody>
     ${filas.map(f=>`<tr><td>${esc(quien(f.p))}${f.p.id===S.uid?' <small class="meta">(tú)</small>':''}</td><td>${esc(ROLES[f.p.rol])}</td><td><span class="chipE e-${f.e}">${EST_NOM[f.e]}</span></td><td>${horaDesde(f.desde,
-f.e)}</td>${celdaPrimera(f.p.id,f.desde,f.e)}<td>${celdaMotivo(f.p,f.e,vm.get(f.p.id))}</td>${esTodo()?`<td>${btnCambio(f.p,f.e)}</td>`:''}</tr>`).join('')||'<tr><td colspan="7">No hay formadores ni GTR.</td></tr>'}
+f.e)}</td>${celdaTiempo(f.desde,f.e)}${celdaPrimera(f.p.id,f.desde,f.e)}${celdaConectado(f.p.id,f.desde,f.e)}<td>${celdaMotivo(f.p,f.e,vm.get(f.p.id))}</td>${esTodo()?`<td>${btnCambio(f.p,f.e)}</td>`:''}</tr>`).join('')||'<tr><td colspan="9">No hay formadores ni GTR.</td></tr>'}
     </tbody></table></div>`;}
 Object.assign(ACC,{estado:id=>cambiarEstado(id),'est-menu':()=>{estMenuAbierto=!estMenuAbierto;dibujarTop();},cobertura:()=>{if(esTodo())coberturaDlg();
 },'cob-dar':async id=>{const v=$('#cob-h-'+id).value;if(!v)return alert('Elige hasta qué fecha y hora.');const{error}=await sb.rpc('asignar_cobertura',
@@ -1618,17 +1617,17 @@ const ts=[...pendTablas];pendTablas.clear();try{if(ts.includes('*'))await cargar
 const q=t==='examen_intentos'?leerIntentos():sb.from(t).select('*');return q.then(r=>{if(!r.error)S[APLICAR[t]]=r.data;});}
 const f=RECARGA[t];if(!f||hechas.has(f))return null;hechas.add(f);return f();}));}
 dibujar();}catch(e){}},800);}
-function iniciarTiempoReal(){if(tiempoReal)return;tiempoReal=true;sb.channel('cambios').on('postgres_changes',{event:'*',schema:'public'},p=>{if(p.table==='estado_cambio'){
+function iniciarTiempoReal(){if(tiempoReal)return;tiempoReal=true;sb.channel('cambios').on('postgres_changes',{event:'*',schema:'public'},p=>{if(p.table==='sesion_activa'){if(p.new&&p.new.user_id===S.uid&&p.new.sesion&&p.new.sesion!==S.sesionId)cerrarPorReemplazo();return;}if(p.table==='estado_cambio'){
 if(p.new&&p.new.user_id===S.uid){if(p.new.estado==='desconectado'&&tieneEstado())desconexionAjena().then(si=>{if(si)forzarSalida(MSG_DESC_AJENA);});else sincronizarMiEstado(p.new.estado,
 p.new.desde);}
 alCambioEstado();return;}
 if(p.table==='estado_intervenciones'){if(S.vista==='panel'&&$('#est-interv'))cargarIntervenciones();return;}
 if(p.table==='acceso_alertas'){alCambioAlerta();return;}
 if(p.table==='estado_actual'||p.table==='estado_log')return;alCambioTabla(p);}).subscribe();}
-async function entrar(ses){S.uid=ses.user.id;S.cargando=true;S.error='';hechasCargar();S.vista=location.hash.slice(1)||'inicio';document.body.classList.remove('locked');
+async function entrar(ses){S.uid=ses.user.id;S.sesionId=devIdLeer();S.reemplazada=false;S.cargando=true;S.error='';hechasCargar();S.vista=location.hash.slice(1)||'inicio';document.body.classList.remove('locked');
 dibujar();try{await cargarPerfil();await cargarHorario(true);if(conHorario()&&!enHorario()){motivoSalida=`El portal está fuera de horario. ${textoHorario()}`;
 await sb.auth.signOut({scope:'local'});return;}
-revisarTactil();await iniciarEstado();await cargar();}catch(e){S.error=msg(e);}
+revisarTactil();try{await sb.rpc('registrar_sesion',{p_sesion:S.sesionId});}catch(e){}await iniciarEstado();await cargar();}catch(e){S.error=msg(e);}
 S.cargando=false;if(!veMateriales()&&temaDe(S.vista))S.vista='inicio';if(!abrirDe(S.vista)&&S.cats[0])S.abiertos['cat:'+S.cats[0].id]=true;dibujar();iniciarTiempoReal();
 revisarHorario();if(tieneEstado()){retenerPagina();pedirPantalla();latir();}}
 function salir(){S.uid=null;S.rol=null;S.codigo='';S.nombre='';S.vista='inicio';S.cargando=true;S.error='';S.ultInterv=null;S.accesos=[];S.menu=[];S.cats=[];
@@ -1847,6 +1846,8 @@ const guardar=async(lista,btn)=>{const er=$('#ferr');btn.disabled=true;er.hidden
 dlg.querySelector('[data-save]').onclick=e=>guardar(om,e.currentTarget);
 dlg.querySelector('[data-reset]').onclick=e=>guardar([],e.currentTarget);
 if(!dlg.open)dlg.showModal();};pintar();}
+function devIdLeer(){try{let d=localStorage.getItem('devId');if(!d){d=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():String(Date.now())+Math.random();localStorage.setItem('devId',d);}return d;}catch(e){return'x';}}
+function cerrarPorReemplazo(){if(!S.uid||S.reemplazada)return;S.reemplazada=true;motivoSalida='Tu usuario inició sesión en otro equipo. Solo se permite una sesión conectada por usuario, por eso esta se cerró.';try{sb.auth.signOut({scope:'local'});}catch(e){}}
 async function cargarHorario(base){
 if(!sb)return;try{const{data,error}=await sb.from('ajustes').select('*').eq('id',1).maybeSingle();if(!error&&data)aplicarAjustes(data,base);}catch(e){
 }
