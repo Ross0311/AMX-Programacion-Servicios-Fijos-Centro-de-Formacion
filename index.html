@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AMX Programación Servicios Fijos | Centro de Formación</title>
-<link rel="icon" type="image/svg+xml" href="marca.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&display=swap" rel="stylesheet">
@@ -597,13 +596,13 @@ const DOMINIO='formacion.example.com';const emailDe=codigo=>`${codigo}@${DOMINIO
 const sb=configurado?supabase.createClient(SUPABASE_URL,SUPABASE_KEY):null;const S={cargando:true,error:'',uid:null,codigo:'',nombre:'',rol:null,vista:'inicio',
 accesos:[],menu:[],cats:[],noticias:[],materiales:[],bloques:[],vistos:[],preguntas:[],perfiles:[],estado:null,omisiones:[],hechas:new Set(),f:{q:'',cat:'',
 dia:''},p:{dias:'30',cat:'',noticia:''},abiertos:{}};const CATS=['Activaciones','Validaciones','Programación','Seguimiento'];const COL_CAT={'Activaciones':'#1E63D6','Validaciones':'#0B2447','Programación':'#F5A524','Seguimiento':'#8A8A90'};const ROLES={asesor:'Asesor',gtr:'GTR',supervisor:'Supervisor',coordinador:'Coordinador',formador:'Formador',todopoderoso:'Todopoderoso'};
-const ORDEN_ROL=['todopoderoso','formador','supervisor','gtr','coordinador','asesor'];const AREAS_EQUIPO={'amazonas':'Amazonas','ancash':'Áncash','apurimac':'Apurímac','arequipa':'Arequipa','ayacucho':'Ayacucho','cajamarca':'Cajamarca','cusco':'Cusco','huancavelica':'Huancavelica','huanuco':'Huánuco','ica':'Ica','junin':'Junín','la-libertad':'La Libertad','lambayeque':'Lambayeque','loreto':'Loreto','madre-de-dios':'Madre de Dios','moquegua':'Moquegua','pasco':'Pasco','piura':'Piura','puno':'Puno','san-martin':'San Martín','tacna':'Tacna','tumbes':'Tumbes','ucayali':'Ucayali','callao':'Callao','lima':'Lima'};const AREAS={...AREAS_EQUIPO,general:'General (ve todo)'};const REGIONES={sur:'Sur',centro:'Centro',norte:'Norte',lima:'Lima'};const enAlcance=(ar,m)=>ar==='todos'||m.area===ar||('r:'+(m.region||'-'))===ar;const enArea=(m,ea)=>!ea||m.area===ea||('r:'+(m.region||'-'))===ea;const ROL_GENERAL=['todopoderoso',
+const ORDEN_ROL=['todopoderoso','formador','supervisor','gtr','coordinador','asesor'];const AREAS_EQUIPO={'apurimac':'Apurímac','arequipa':'Arequipa','cusco':'Cusco','ica':'Ica','madre-de-dios':'Madre de Dios','moquegua':'Moquegua','puno':'Puno','tacna':'Tacna','ayacucho':'Ayacucho','huancavelica':'Huancavelica','huanuco':'Huánuco','junin':'Junín','pasco':'Pasco','ucayali':'Ucayali','amazonas':'Amazonas','ancash':'Áncash','cajamarca':'Cajamarca','la-libertad':'La Libertad','lambayeque':'Lambayeque','loreto':'Loreto','piura':'Piura','san-martin':'San Martín','tumbes':'Tumbes','callao':'Callao','lima':'Lima'};const AREAS={...AREAS_EQUIPO,general:'General (ve todo)'};const REGIONES={sur:'Sur',centro:'Centro',norte:'Norte',lima:'Lima'};const enAlcance=(ar,m)=>ar==='todos'||m.area===ar||('r:'+(m.region||'-'))===ar;const enArea=(m,ea)=>!ea||m.area===ea||('r:'+(m.region||'-'))===ea;const ROL_GENERAL=['todopoderoso',
 'formador','supervisor','gtr'];const CON_SUPERVISOR=['asesor','coordinador'];const esJefe=()=>S.rol==='supervisor'||S.rol==='coordinador';
 const esGTR=()=>S.rol==='gtr';const esCoord=()=>S.rol==='coordinador';const veTodo=()=>ROL_GENERAL.includes(S.rol);const esPanel=()=>esF()||esJefe()||esGTR();
 const puedeDescargar=()=>esTodo()||esGTR();const menuExamenes=()=>esF()||S.rol==='asesor'||esCoord();const tieneEstado=()=>!!S.rol&&!['todopoderoso','supervisor'].includes(S.rol);
 const veAlertas=()=>esTodo()||esCoord();const veMateriales=()=>!esGTR();const SECCIONES_PANEL={todopoderoso:['conectividad','noticias','examenes','alertas'],
 formador:['conectividad','noticias','examenes'],gtr:['conectividad'],supervisor:['conectividad','examenes'],coordinador:['conectividad','examenes','alertas']};
-const aplicaNoticia=(n,p)=>true;const norm=t=>String(t??'').normalize('NFD').replace( /[\u0300-\u036f]/g ,
+const aplicaNoticia=(n,p)=>!n.dirigido||n.dirigido==='todos'||p.area==='general'||enAlcance(n.dirigido,p);const norm=t=>String(t??'').normalize('NFD').replace( /[\u0300-\u036f]/g ,
 '').toLowerCase();const diaKey=iso=>{const d=new Date(iso);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,
 '0');};const fechaHora=iso=>iso?new Date(iso).toLocaleString('es-PE',{day:'numeric',month:'short',year:'numeric',hour:'numeric',minute:'2-digit',hour12:true}):'';
 const diaLargo=k=>new Date(k+'T12:00:00').toLocaleDateString('es-PE',{weekday:'short',day:'numeric',month:'short',year:'numeric'});const quien=u=>(u.nombre?u.nombre+' · ':'')+(u.codigo||'');
@@ -670,7 +669,7 @@ function etiquetasOblig(n){if(!n.obligatoria)return'';return vigente(n)?`<span c
 }
 const alerta=document.querySelector('#alerta');alerta.addEventListener('cancel',e=>e.preventDefault());function cartaAlerta(n){const quedan=Math.max(0,
 2-omisionesDe(n.id));return`<article class="altn">
-    <div class="tags"><span class="tag cat">${esc(n.categoria)}</span>${n.recordada_en?'<span class="tag urg">Recordatorio</span>':''}${n.vence?`<span class="tag plano">Hasta ${esc(fecha(n.vence))}</span>`:''}</div>
+    <div class="tags"><span class="tag cat">${esc(n.categoria)}</span>${n.dirigido&&n.dirigido!=='todos'?`<span class="tag plano">Para: ${esc(AREA_EX[n.dirigido]||n.dirigido)}</span>`:''}${n.recordada_en?'<span class="tag urg">Recordatorio</span>':''}${n.vence?`<span class="tag plano">Hasta ${esc(fecha(n.vence))}</span>`:''}</div>
     <h4>${esc(n.titulo)}</h4><p>${esc(n.cuerpo)}</p>${adjuntosHTML(n)}
     <div class="hora">🗓 Publicado: <b>${esc(fechaHora(n.creado))}</b></div>
     <div class="vb"><button class="btn ok sm" data-act="vb-ok" data-id="${n.id}">✔ Leído y conforme</button>
@@ -686,9 +685,9 @@ if((dlg.open||exd.open)&&!alerta.open)return;alerta.innerHTML=`<div class="alt">
 if(!alerta.open)alerta.showModal();}
 const per=id=>S.perfiles.find(x=>x.id===id);function noticiasFiltradas(){const{q,cat,dia}=S.f,ql=norm(q);return S.noticias.filter(n=>(!cat||n.categoria===cat)&&(!dia||diaKey(n.creado)===dia)&&(!ql||norm(n.titulo+' '+n.cuerpo+' '+n.categoria).includes(ql)));
 }
-function quienes(n){const ases=miembros().filter(a=>aplicaNoticia(n,a));const vm=new Map(S.vistos.filter(v=>v.noticia_id===n.id).map(v=>[v.user_id,v]));
+function quienes(n){const ases=vbPersonas().filter(a=>aplicaNoticia(n,a));const vm=new Map(S.vistos.filter(v=>v.noticia_id===n.id).map(v=>[v.user_id,v]));
 const ok=[],duda=[],pend=[];ases.forEach(a=>{const v=vm.get(a.id);(!v?pend:v.estado==='ok'?ok:duda).push({a,v});});return{ok,duda,pend};}
-function listasHTML(n){const q=quienes(n);const col=(t,arr,cls)=>`<div><h4><span class="est ${cls}">${t} ${arr.length}</span></h4><ul>${arr.map(x=>`<li>${esc(quien(x.a))}${x.v?` <small>· ${esc(fechaHora(x.v.fecha))}</small>`:''}</li>`).join('')||'<li>—</li>'}</ul></div>`;
+function listasHTML(n){const q=quienes(n);const col=(t,arr,cls)=>`<div><h4><span class="est ${cls}">${t} ${arr.length}</span></h4><ul>${arr.map(x=>`<li>${esc(quien(x.a))}${x.a.rol!=='asesor'?` <small>(${esc(ROLES[x.a.rol])})</small>`:''}${x.v?` <small>· ${esc(fechaHora(x.v.fecha))}</small>`:''}</li>`).join('')||'<li>—</li>'}</ul></div>`;
 return`<div class="listas">${col('✔ Visto bueno',q.ok,'ok')}${col('✖ Con duda',q.duda,'duda')}${col('⏳ Pendientes',q.pend,'pend')}</div>`;}
 function respPorFormadorHTML(pregs){const g=new Map();pregs.filter(p=>p.respuesta&&p.respondido_en).forEach(p=>{const k=p.respondido_por||'?',h=(new Date(p.respondido_en)-new Date(p.creado))/36e5;
 if(h<0)return;if(!g.has(k))g.set(k,{nombre:p.respondido_por_nombre||(per(p.respondido_por)?quien(per(p.respondido_por)):'Sin nombre'),hs:[]});g.get(k).hs.push(h);
@@ -699,7 +698,7 @@ return`<section class="card" style="margin-bottom:18px"><h3>Tiempo de respuesta 
     ${filas.map(x=>`<tr><td>${esc(x.nombre)}</td><td class="num">${x.hs.length}</td><td class="num"><b>${fmtH(x.prom)}</b></td><td class="num">${fmtH(x.max)}</td></tr>`).join('')}
     </tbody></table></div></section>`;}
 function hiloHTML(n){return misPreg(n.id).map(p=>{const u=esF()?per(p.user_id):null;const r=p.respuesta?`<div class="r"><b>Respuesta de ${esc(p.respondido_por_nombre||(per(p.respondido_por)?quien(per(p.respondido_por)):'un formador'))} · ${esc(fechaHora(p.respondido_en))}${(!esF()&&p.user_id===S.uid&&!p.leida)?'<span class="nuevo">NUEVA</span>':''}</b>${esc(p.respuesta)}</div>`:(esF()?'':'<div class="r"><b>Esperando respuesta de un formador…</b></div>');
-return`<div class="q ${!esF()&&p.user_id===S.uid?'mia':''}"><b>${esF()?esc(u?quien(u):'Usuario'):p.user_id===S.uid?'Tu pregunta':'Pregunta de un asesor'} · ${esc(fechaHora(p.creado))}</b>${esc(p.pregunta)}${r}
+return`<div class="q ${!esF()&&p.user_id===S.uid?'mia':''}"><b>${esF()?esc(u?quien(u):'Usuario'):p.user_id===S.uid?'Tu pregunta':'Pregunta de un compañero'} · ${esc(fechaHora(p.creado))}</b>${esc(p.pregunta)}${r}
       ${esF()?`<div class="tools"><button class="btn sm" data-act="resp-preg" data-id="${p.id}">${p.respuesta?'Editar respuesta':'Responder'}</button><button class="btn danger sm" data-act="del-preg" data-id="${p.id}">Borrar pregunta</button></div>`:''}</div>`;
 }).join('');}
 function bloqueVB(n){if(esF()){const q=quienes(n);return`<div class="vb"><div class="resumen"><span class="est ok">✔ ${q.ok.length}</span><span class="est duda">✖ ${q.duda.length}</span><span class="est pend">⏳ ${q.pend.length}</span></div>
@@ -711,7 +710,7 @@ return`<div class="vb"><span class="est duda">✖ Con duda</span><button class="
 function tarjetaNoticia(n){let cant=0;if(esF()){const q=quienes(n);cant=q.pend.length+q.duda.length;}
 const tools=esF()?`<div class="tools"><button class="btn add sm" data-act="recordar" data-id="${n.id}" title="Les vuelve a salir el panel de alerta al conectarse">🔔 Recordar a pendientes (${cant})</button><button class="btn ghost sm" data-act="edit-news" data-id="${n.id}">Editar</button><button class="btn danger sm" data-act="del-news" data-id="${n.id}">Quitar</button></div>`:'';
 const hilo=hiloHTML(n);return`<article class="nw ${n.urgente?'urg':''}">
-    <div class="tags"><span class="tag cat">${esc(n.categoria)}</span>${n.urgente?'<span class="tag urg">Último minuto</span>':''}${etiquetasOblig(n)}</div>
+    <div class="tags"><span class="tag cat">${esc(n.categoria)}</span>${n.dirigido&&n.dirigido!=='todos'?`<span class="tag plano">Para: ${esc(AREA_EX[n.dirigido]||n.dirigido)}</span>`:''}${n.urgente?'<span class="tag urg">Último minuto</span>':''}${etiquetasOblig(n)}</div>
     <h3>${esc(n.titulo)}</h3><p>${esc(n.cuerpo)}</p>${adjuntosHTML(n)}
     <div class="hora">🗓 Publicado: <b>${esc(fechaHora(n.creado))}</b>${esF()&&S.autores&&S.autores.get(n.id)?` · ✍ Publicó: <b>${esc(S.autores.get(n.id))}</b>`:''}${esF()&&n.recordatorios?` · 🔔 Último recordatorio: ${esc(fechaHora(n.recordada_en))} (${n.recordatorios} ${n.recordatorios===1?'vez':'veces'})`:''}</div>
     ${hilo?`<div class="qa-thread">${hilo}</div>`:''}
@@ -742,7 +741,7 @@ const rec=(S.f.q||S.f.cat||S.f.dia)?[]:S.materiales.slice(0,4);$('#main').innerH
     <div class="feed" id="feed"></div>
     ${rec.length?`<h2>Material reciente</h2><div class="grid">${rec.map(tarjetaMat).join('')}</div>`:''}`;dibujarFeed();}
 function fmtH(h){return h==null?'—':h<1?Math.round(h*60)+' min':h<48?h.toFixed(1)+' h':(h/24).toFixed(1)+' días';}
-function datosPanel(){const ases=miembros();const ids=new Set(ases.map(a=>a.id));const desde=S.p.dias==='todo'?0:Date.now()-Number(S.p.dias)*864e5;const nots=S.noticias.filter(n=>new Date(n.creado).getTime()>=desde&&(!S.p.cat||n.categoria===S.p.cat));
+function datosPanel(){const ases=vbPersonas();const ids=new Set(ases.map(a=>a.id));const desde=S.p.dias==='todo'?0:Date.now()-Number(S.p.dias)*864e5;const nots=S.noticias.filter(n=>new Date(n.creado).getTime()>=desde&&(!S.p.cat||n.categoria===S.p.cat));
 const nmap=new Map(nots.map(n=>[n.id,n]));const vs=S.vistos.filter(v=>nmap.has(v.noticia_id)&&ids.has(v.user_id)&&aplicaNoticia(nmap.get(v.noticia_id),
 per(v.user_id)));return{ases,nots,nmap,vs};}
 const barra=(nm,ok,duda,pend)=>{const t=(ok+duda+pend)||1;return`<div class="bar"><span class="nm" title="${esc(nm)}">${esc(nm)}</span><div class="tr"><i class="c-ok" style="width:${ok*100/t}%"></i><i class="c-duda" style="width:${duda*100/t}%"></i><i class="c-pend" style="width:${pend*100/t}%"></i></div><span class="vl">${Math.round(ok*100/t)}% ✔</span></div>`;
@@ -764,7 +763,7 @@ const nSel=nots.find(n=>String(n.id)===String(S.p.noticia))||nots[0];const a1=pc
       <select id="pdias" aria-label="Periodo">${[['7','Últimos 7 días'],['30','Últimos 30 días'],['90','Últimos 90 días'],['todo','Todo el historial']].map(([v,
 l])=>`<option value="${v}" ${S.p.dias===v?'selected':''}>${l}</option>`).join('')}</select>
       <select id="pcat" aria-label="Categoría"><option value="">Todas las categorías</option>${CATS.map(c=>`<option ${S.p.cat===c?'selected':''}>${c}</option>`).join('')}</select>
-      <span class="meta">${veTodo()?`Se calcula sobre los ${A} asesores. Cada noticia cuenta para todos los asesores.`:`Se calcula sobre los ${A} asesores de tu equipo.`}</span>
+      <span class="meta">${veTodo()?`Se calcula sobre las ${A} personas que deben dar visto bueno (asesores, coordinadores y supervisores). Cada noticia cuenta solo para quienes la reciben según su segmentación.`:`Se calcula sobre los ${A} asesores de tu equipo.`}</span>
     </div>
     <div class="kpis">
       <div class="kpi"><span>Asesores</span><b>${A}</b><small>usuarios con rol asesor</small></div>
@@ -896,14 +895,14 @@ $('#uf-cuenta').textContent=`Mostrando ${vis.length} de ${ULISTA.length} usuario
       ${protegido(u)?'':`<button class="btn ghost sm" data-act="clave-user" data-id="${u.id}">Contraseña</button>`}
       ${u.id===S.uid||protegido(u)?'':`<button class="btn add sm" data-act="edit-user" data-id="${u.id}">Editar</button><button class="btn danger sm" data-act="del-user" data-id="${u.id}">Quitar</button>`}</div>`).join('')||`<p class="meta">${ULISTA.length?'Nadie coincide con estos filtros.':'Aún no hay usuarios.'}</p>`;
 }
-const camposNoticia=n=>[{k:'titulo',l:'Título',req:1},{k:'categoria',l:'Categoría', t:'sel',o:CATS},{k:'cuerpo',l:'Mensaje',t:'area',req:1},{k:'urgente',l:'Marcar como último minuto (aparece en la cinta superior)',t:'chk'},{k:'obligatoria',
+const camposNoticia=n=>[{k:'titulo',l:'Título',req:1},{k:'categoria',l:'Categoría', t:'sel',o:CATS},{k:'dirigido',l:'Dirigida a (todos, una región o un departamento)',t:'sel',o:Object.values(AREA_EX)},{k:'cuerpo',l:'Mensaje',t:'area',req:1},{k:'urgente',l:'Marcar como último minuto (aparece en la cinta superior)',t:'chk'},{k:'obligatoria',
 l:'Noticia obligatoria: a quien no dé visto bueno le saldrá un panel de alerta al conectarse',t:'chk'},{k:'limite',l:'Obligatoria hasta esta fecha (déjalo vacío para que dure para siempre)',
 t:'date'},{k:'archivos',l:'Adjuntar archivos (PDF, imágenes, Word, Excel…). Puedes elegir varios, máx. 20 MB c/u',t:'files',acc:'.pdf,image/*,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.csv,.txt'},
 ...(n&&(n.adjuntos||[]).length?[{k:'quitar',l:'Archivos ya adjuntos: marca los que quieres quitar',t:'checks',o:n.adjuntos.map(a=>[a.url,a.nombre])}]:[])];
 async function datosNoticia(o,previos=[]){const quitar=new Set(o.quitar||[]);const adjuntos=previos.filter(a=>!quitar.has(a.url));for(const f of(o.archivos||[])){
 if(f.size>20*1024*1024)throw new Error(`"${f.name}" pesa más de 20 MB.`);adjuntos.push({nombre:f.name,url:await subir(f),tipo:f.type||''});}
 const vence=(o.obligatoria&&o.limite)?new Date(o.limite+'T23:59:59-05:00').toISOString():null;if(vence&&new Date(vence)<new Date())throw new Error('La fecha límite ya pasó. Elige una fecha de hoy en adelante.');
-return{datos:{titulo:o.titulo,categoria:o.categoria,cuerpo:o.cuerpo,urgente:o.urgente,obligatoria:o.obligatoria,vence,adjuntos},quitados:previos.filter(a=>quitar.has(a.url))};
+return{datos:{titulo:o.titulo,categoria:o.categoria,dirigido:claveDe(AREA_EX,o.dirigido)||'todos',cuerpo:o.cuerpo,urgente:o.urgente,obligatoria:o.obligatoria,vence,adjuntos},quitados:previos.filter(a=>quitar.has(a.url))};
 }
 const camposMat=[{k:'titulo',l:'Nombre del material',req:1},{k:'tipo',l:'Tipo',t:'sel',o:['PDF','Flyer','Enlace']},{k:'archivo',l:'Subir archivo (PDF o imagen)',
 t:'file',acc:'.pdf,image/*'},{k:'link',l:'…o pegar un enlace',p:'https://'}];const ACC={logout:async()=>{await marcarDesconectado();await sb.auth.signOut();
@@ -944,9 +943,9 @@ const{error}=await sb.rpc('cambiar_clave',{p_id:id,p_clave:c.trim()});if(error)t
 const{error}=await sb.rpc('borrar_usuario',{p_id:id});if(error)throw error;await usuariosDlg();},'add-news':()=>form('Publicar noticia',camposNoticia(null),
 async o=>{const{datos}=await datosNoticia(o);await mut(sb.from('noticias').insert(datos));}),'edit-news':id=>{const n=S.noticias.find(x=>x.id==id);form('Editar noticia',
 camposNoticia(n),async o=>{const{datos,quitados}=await datosNoticia(o,n.adjuntos||[]);await mut(sb.from('noticias').update(datos).eq('id',id));for(const a of quitados)await borrarArchivo(a.url);
-},{...n,limite:n.vence?diaKey(n.vence):''});},recordar:async id=>{const n=S.noticias.find(x=>x.id==id);if(!vigente(n))throw new Error('La fecha límite de esta noticia ya pasó. Edítala y amplía la fecha para poder recordarla.');
-const q=quienes(n),cant=q.pend.length+q.duda.length;if(!cant){alert('Todos los asesores ya dieron su visto bueno. No hay a quién recordar.');return;}
-if(!confirm(`Se enviará un recordatorio a ${cant} asesor${cant>1?'es':''} que aún no dieron visto bueno.\n\nLes saldrá un panel de alerta al conectarse y se reinician sus 2 omisiones de esta noticia.`))return;
+},{...n,dirigido:AREA_EX[n.dirigido||'todos'],limite:n.vence?diaKey(n.vence):''});},recordar:async id=>{const n=S.noticias.find(x=>x.id==id);if(!vigente(n))throw new Error('La fecha límite de esta noticia ya pasó. Edítala y amplía la fecha para poder recordarla.');
+const q=quienes(n),cant=q.pend.length+q.duda.length;if(!cant){alert('Todos ya dieron su visto bueno. No hay a quién recordar.');return;}
+if(!confirm(`Se enviará un recordatorio a ${cant} persona${cant>1?'s':''} que aún no dieron visto bueno.\n\nLes saldrá un panel de alerta al conectarse.`))return;
 const{error}=await sb.rpc('recordar_noticia',{p_id:Number(id)});if(error)throw error;await refrescar();alert('Recordatorio enviado.');},omitir:async id=>{
 const n=S.noticias.find(x=>x.id==id);if(omisionesDe(n.id)>=2)throw new Error('Ya no puedes omitir esta noticia.');const{error}=await sb.rpc('omitir_noticia',
 {p_id:Number(id)});if(error)throw error;hechaMarcar(n);await refrescar();},'del-preg':async id=>{if(!esF())return;if(confirm('¿Borrar esta pregunta (y su respuesta, si la tiene)? No se puede deshacer.')){await mut(sb.from('noticia_preguntas').delete().eq('id',id));await refrescar();}},'del-news':async id=>{if(confirm('¿Quitar esta noticia?')){await mut(sb.from('noticias').delete().eq('id',
@@ -1033,7 +1032,7 @@ const finDeSemanaPeru=()=>['Sat','Sun'].includes(new Intl.DateTimeFormat('en-US'
 if(!p||p.rol!=='coordinador')return null;if(p.cobertura_hasta&&new Date(p.cobertura_hasta)>new Date())return{tipo:'manual',hasta:p.cobertura_hasta};if(!(S.horarioInfo&&S.horarioInfo.cobertura_finde===false)&&finDeSemanaPeru())return{
 tipo:'finde'};return null;}
 const enCobertura=()=>esCoord()&&!!coberturaDe(S.perfiles.find(p=>p.id===S.uid));const veTodosAsesores=()=>veTodo()||enCobertura();const miembros=()=>S.perfiles.filter(p=>p.rol==='asesor'&&(veTodosAsesores()||p.coordinador_id===S.uid));
-const miembrosEx=()=>[...miembros(),...(veTodo()?S.perfiles.filter(p=>p.rol==='coordinador'):[])];const staffEst=()=>esF()?S.perfiles.filter(p=>['formador',
+const vbPersonas=()=>S.perfiles.filter(p=>['asesor','coordinador','supervisor'].includes(p.rol));const miembrosEx=()=>[...miembros(),...(veTodo()?S.perfiles.filter(p=>p.rol==='coordinador'):[])];const staffEst=()=>esF()?S.perfiles.filter(p=>['formador',
 'gtr'].includes(p.rol)).sort((a,b)=>(a.nombre||a.codigo||'').localeCompare(b.nombre||b.codigo||'')):[];function textoEstado(){const e=S.estadoMio;if(!e||!e.desde)return'';
 const d=new Date(e.desde);return'Desde las '+d.toLocaleTimeString('es-PE',{hour:'numeric',minute:'2-digit',hour12:true})+' · '+fmtS((Date.now()-d.getTime())/1000);
 }
@@ -1353,7 +1352,7 @@ const puedeCambiarEstadoDe=(p,e)=>e!=='desconectado'&&p.id!==S.uid&&(esTodo()||(
 const noSeConectoHoy=r=>!r||!r.ultimo_latido||diaLima(r.ultimo_latido)<hoyLima();const puedeMotivo=m=>(m.rol==='formador'||m.rol==='gtr')?esTodo():(esF()||esGTR()||(esCoord()&&m.rol==='asesor'));function celdaMotivo(m,
 e,r){if(e!=='desconectado'||!noSeConectoHoy(r))return'';const mt=(S.est.motivos||new Map()).get(m.id);if(puedeMotivo(m))return`<select data-motivo="${m.id}" class="sel-motivo ${mt?'':'falta'}" aria-label="Motivo de no conexión">
       <option value="">— Elegir motivo —</option>${MOTIVOS().map(k=>`<option value="${k}" ${mt&&mt.codigo===k?'selected':''}>${esc(COD[k].n)}</option>`).join('')}</select>`;
-return mt?`<span class="chipE e-desconectado" title="Registrado por ${esc(mt.por_nombre||'')}">${esc(COD[mt.codigo]?COD[mt.codigo].n:mt.codigo)}</span>`:'<span class="meta">Sin motivo</span>';
+return mt?`<span class="chipE e-desconectado" title="${mt.auto?'Automático según el horario':'Registrado por '+esc(mt.por_nombre||'')}">${esc(COD[mt.codigo]?COD[mt.codigo].n:mt.codigo)}</span>`:'<span class="meta">Sin motivo</span>';
 }
 async function guardarMotivo(uid,cod){const{error}=await sb.rpc('guardar_motivo',{p_user:uid,p_dia:hoyLima(),p_codigo:cod||null});if(error){alert( /guardar_motivo/ .test(error.message||'')?'Falta ejecutar el SQL de cambios 14 en Supabase.':msg(error));
 pintarEstados(true);return;}
@@ -1465,7 +1464,7 @@ todo=todo.concat(data||[]);if(!data||data.length<1000)break;desde+=1000;}
 return{data:todo};}
 async function cargarEstadosPanel(){const cont=$('#pnl-estados');if(!cont)return;if(S.est.ok)cont.innerHTML=estadosHTML();else cont.innerHTML='<section class="card"><h3>Conectividad</h3><p class="meta">Cargando…</p></section>';
 const{desde,hasta}=rangoEst();const[a,b,c,mo,pc]=await Promise.all([sb.from('estado_actual').select('*'),rpcTodo('estados_detalle',{p_desde:desde,p_hasta:hasta}),
-veAlertas()?consultaAlertas(desde):Promise.resolve({data:[]}),sb.from('asesor_motivos').select('user_id,codigo,por_nombre').eq('dia',hoyLima()),sb.rpc('primera_conexion_hoy')]);const cont2=$('#pnl-estados');
+veAlertas()?consultaAlertas(desde):Promise.resolve({data:[]}),sb.rpc('motivos_dia',{p_dia:hoyLima()}),sb.rpc('primera_conexion_hoy')]);const cont2=$('#pnl-estados');
 if(!cont2)return;S.primera=new Map(((pc&&!pc.error&&pc.data)||[]).map(x=>[x.user_id,x.primera]));S.est.motivos=new Map(((mo&&!mo.error&&mo.data)||[]).map(x=>[x.user_id,x]));const err=a.error||b.error;if(err){cont2.innerHTML=`<section class="card"><h3>Conectividad</h3><p class="meta">${ /estados_detalle/ .test(err.message||'')?'⚠️ Falta ejecutar el SQL de cambios 03 en Supabase.':esc(msg(err))}</p></section>`;
 return;}
 S.est={vivo:a.data||[],det:b.data||[],alertas:c.error?[]:(c.data||[]),sinAlertas:!!c.error,ok:true,hora:new Date(),clave:desde+hasta,cargado:Date.now()};
