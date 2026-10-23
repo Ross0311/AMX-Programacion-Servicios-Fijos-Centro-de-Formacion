@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AMX Programación Servicios Fijos | Centro de Formación</title>
-<link rel="icon" type="image/svg+xml" href="marca.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&display=swap" rel="stylesheet">
@@ -537,7 +536,7 @@ footer{padding:22px 16px}
 @media (prefers-reduced-motion:reduce){.ticker .run{animation:none}
 *{transition:none!important}
 .envivo::before{animation:none}
-}.ordlist{display:flex;flex-direction:column;gap:6px;margin:12px 0}.orden-row{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:#fff}.orden-row b{flex:1;font-weight:600;font-size:14.5px}.orden-row .btn{min-width:38px}.cod.auto{outline:1.5px dashed rgba(0,0,0,.4);outline-offset:-2px}.page.ancha{max-width:none}</style>
+}.ordlist{display:flex;flex-direction:column;gap:6px;margin:12px 0}.orden-row{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:#fff}.orden-row b{flex:1;font-weight:600;font-size:14.5px}.orden-row .btn{min-width:38px}.cod.auto{outline:1.5px dashed rgba(0,0,0,.4);outline-offset:-2px}.page.ancha{max-width:none}.reglas{list-style:none;display:flex;flex-direction:column;gap:4px;font-size:13.5px;color:var(--muted)}.reglas li:before{content:'○ '}.reglas li.ok{color:#166534;font-weight:600}.reglas li.ok:before{content:'✔ '}</style>
 </head>
 <body class="locked">
 <section class="gate" id="gate">
@@ -547,7 +546,7 @@ footer{padding:22px 16px}
 <form id="gform" hidden>
 <div><h1>Ingresa a tu cuenta</h1><p class="gfoot" style="text-align:left">Usa tu usuario y contraseña de la empresa.</p></div>
 <label>Usuario<input name="codigo" inputmode="numeric" autocomplete="username" required placeholder="Tu código de la empresa"></label>
-<label>Contraseña<input name="clave" type="password" autocomplete="current-password" required placeholder="Tu DNI"></label>
+<label>Contraseña<input name="clave" type="password" autocomplete="current-password" required placeholder="Tu contraseña"></label>
 <label class="chk"><input type="checkbox" id="gver"> Mostrar contraseña</label>
 <p class="err" id="gerr" hidden></p>
 <button class="btn" type="submit">Ingresar</button>
@@ -646,7 +645,7 @@ $('#nav').innerHTML=`<button class="item ${S.vista==='inicio'?'on':''}" data-go=
 const gs=S.menu.filter(g=>g.categoria_id===c.id),k='cat:'+c.id;return`<button class="cat" data-cat="${esc(c.id)}" aria-expanded="${!!S.abiertos[k]}">${esc(c.nombre)} <span class="n">(${gs.length})</span>${chev}</button>
       <div class="catbody ${S.abiertos[k]?'open':''}">${gs.map(grpHtml).join('')}
       ${esF()?`<div class="mini cm"><button data-act="add-grp" data-id="${esc(c.id)}">+ Grupo</button></div>`:''}</div>`;}).join('')+(esF()&&!S.cats.length?'<button class="item addg" data-act="add-grp">+ Agregar grupo al menú</button>':'');
-ordenarNav();$('#foot').innerHTML=(S.estado?`<div class="estado-act"><b>Última actualización</b>${esc(fechaHora(S.estado.actualizado))}${S.estado.detalle?'<br>'+esc(S.estado.detalle):''}</div>`:'')+`<div class="role ${esF()?'edit':''}"><i></i>${esTodo()?'Modo todopoderoso':esF()?'Modo formador':'Rol: '+esc(ROLES[S.rol]||'Asesor')}</div>`+(S.area?`<div class="meta2">${esc((AREAS[S.area]||'')+(S.region&&REGIONES[S.region]?' · Región '+REGIONES[S.region]:''))}</div>`:'')+(S.codigo?`<div class="meta2">${S.nombre?esc(S.nombre)+' · ':''}Usuario ${esc(S.codigo)}</div>`:'')+(esTodo()?'<button class="lnk" data-act="usuarios">Gestionar usuarios</button><button class="lnk" data-act="horario">Horario de atención</button>':'')+(esF()?'<button class="lnk" data-act="orden-menu">Ordenar menú</button>':'')+'<div style="margin-top:8px">By Jhonatan Morzán</div>';
+ordenarNav();$('#foot').innerHTML=(S.estado?`<div class="estado-act"><b>Última actualización</b>${esc(fechaHora(S.estado.actualizado))}${S.estado.detalle?'<br>'+esc(S.estado.detalle):''}</div>`:'')+`<div class="role ${esF()?'edit':''}"><i></i>${esTodo()?'Modo todopoderoso':esF()?'Modo formador':'Rol: '+esc(ROLES[S.rol]||'Asesor')}</div>`+(S.area?`<div class="meta2">${esc((AREAS[S.area]||'')+(S.region&&REGIONES[S.region]?' · Región '+REGIONES[S.region]:''))}</div>`:'')+(S.codigo?`<div class="meta2">${S.nombre?esc(S.nombre)+' · ':''}Usuario ${esc(S.codigo)}</div>`:'')+(esTodo()?'<button class="lnk" data-act="usuarios">Gestionar usuarios</button><button class="lnk" data-act="horario">Horario de atención</button>':'')+(esF()?'<button class="lnk" data-act="orden-menu">Ordenar menú</button>':'')+'<button class="lnk" data-act="cambiar-clave">Cambiar mi contraseña</button><div style="margin-top:8px">By Jhonatan Morzán</div>';
 }
 function dibujarTop(){$('#quick').innerHTML='<span class="lab">Accesos directos</span>'+S.accesos.map(a=>`<a class="qa" href="${esc(a.url)}" target="_blank" rel="noopener">${esc(a.nombre)}${esF()?`<button data-act="del-acc" data-id="${a.id}" title="Quitar acceso" aria-label="Quitar ${esc(a.nombre)}">×</button>`:''}</a>`).join('')+(esF()?'<button class="btn add sm" data-act="add-acc">+ Agregar acceso</button>':'');
 $('#auth').innerHTML=estadoTopHTML()+'<button class="btn ghost" data-act="logout">Cerrar sesión</button>';}
@@ -875,7 +874,7 @@ t:'nota',l:'Área: General. Este rol ve a todos los asesores de todos los depart
 try{const r=await sb.from('perfiles').select('*');if(r.error)throw r.error;ULISTA=r.data;}catch(e){alert(msg(e));return;}
 const opc=(val,txt)=>`<option value="${esc(val)}">${esc(txt)}</option>`;const jefes=rol=>ULISTA.filter(u=>u.rol===rol).sort((a,b)=>(a.nombre||a.codigo||'').localeCompare(b.nombre||b.codigo||''));
 dlg.innerHTML=`<div class="dlg ancho"><h3>Gestionar usuarios</h3>
-    <p class="note">El usuario de cada persona es su código de la empresa y su contraseña es su DNI. Asesores y coordinadores van en un departamento (su región se asigna sola). Todopoderoso, Formador, Supervisor y GTR quedan en General y ven a todos. A cada asesor asígnale su coordinador: el coordinador solo ve a los asesores que tiene asignados.</p>
+    <p class="note">El usuario de cada persona es su código de la empresa. La contraseña que le pongas aquí es TEMPORAL: al ingresar, la persona debe crear una nueva. Asesores y coordinadores van en un departamento (su región se asigna sola). Todopoderoso, Formador, Supervisor y GTR quedan en General y ven a todos. A cada asesor asígnale su coordinador: el coordinador solo ve a los asesores que tiene asignados.</p>
     <div class="ufiltros">
       <input type="search" id="uf-q" placeholder="Buscar por nombre o código">
       <select id="uf-rol">${opc('','Todos los roles')}${ORDEN_ROL.map(r=>opc(r,ROLES[r])).join('')}</select>
@@ -925,7 +924,7 @@ const{ases,nots}=datosPanel();const filas=[['Código','Nombre',...nots.map(n=>n.
 const ap=est.filter(Boolean),o=ap.filter(x=>x.v&&x.v.estado==='ok').length,d=ap.filter(x=>x.v&&x.v.estado==='duda').length;filas.push([a.codigo,a.nombre||'',
 ...est.map(x=>x?estTxt(x.v):'No aplica'),o,d,ap.length-o-d,ap.length?Math.round(o*100/ap.length)+'%':'0%']);});descargarCSV('reporte-general-'+hoyKey()+'.csv',
 filas);},usuarios:()=>usuariosDlg(),'add-users':()=>{const cs=jefesDe('coordinador'),ss=jefesDe('supervisor');form('Agregar usuarios',[{k:'rol',l:'Rol de estas personas',
-t:'sel',o:rolesElegibles()},...camposEquipo(cs,ss),{k:'lista',l:'Una persona por línea: código, DNI, nombre (el nombre es opcional). Puedes pegar directo desde Excel.',
+t:'sel',o:rolesElegibles()},...camposEquipo(cs,ss),{k:'lista',l:'Una persona por línea: código, contraseña temporal, nombre (el nombre es opcional). Puedes pegar directo desde Excel.',
 t:'area',req:1,p:'1234567, 45678912, Ana Pérez\n7654321, 12345678, Luis Soto'}],async o=>{const items=o.lista.split( /\r?\n/ ).map(l=>l.trim()).filter(Boolean).map(l=>{
 const p=l.split( /[,;\t]/ ).map(x=>x.trim());return{codigo:p[0],clave:p[1]||'',nombre:p.slice(2).join(' ')};});if(!items.length)throw new Error('Escribe al menos una línea.');
 const rol=claveDe(ROLES,o.rol)||'asesor',gen=ROL_GENERAL.includes(rol);const{data,error}=await sb.rpc('crear_usuarios',{p_lista:items,p_rol:rol,p_area:gen?null:claveDe(AREAS_EQUIPO,
@@ -939,7 +938,7 @@ await mut(sb.from('perfiles').update({nombre:o.nombre||null,rol,area:gen?'genera
 o.coord):null,supervisor_id:CON_SUPERVISOR.includes(rol)?idDe(ss,o.sup):null,...(rol==='asesor'?{jornada:claveDe(JORNADAS,o.jor)||null}:{})}).eq('id',
 id));return()=>usuariosDlg();},{nombre:u.nombre||'',rol:ROLES[u.rol],area:AREAS_EQUIPO[u.area]||'(Elige un departamento)',coord:(cs.find(x=>x.id===u.coordinador_id)||{
 }).t||'(Sin asignar)',sup:(ss.find(x=>x.id===u.supervisor_id)||{}).t||'(Sin asignar)',jor:JORNADAS[u.jornada]||'(Sin definir)'});},'clave-user':async id=>{
-const c=prompt('Nueva contraseña para esta persona (mínimo 6 caracteres, por ejemplo su DNI):');if(c===null)return;if(c.trim().length<6)throw new Error('La contraseña debe tener al menos 6 caracteres.');
+const c=prompt('Contraseña TEMPORAL para esta persona (mínimo 6 caracteres). Deberá cambiarla al ingresar:');if(c===null)return;if(c.trim().length<6)throw new Error('La contraseña debe tener al menos 6 caracteres.');
 const{error}=await sb.rpc('cambiar_clave',{p_id:id,p_clave:c.trim()});if(error)throw error;alert('Contraseña actualizada.');},'del-user':async id=>{if(!confirm('¿Quitar el acceso a esta persona? Ya no podrá iniciar sesión.'))return;
 const{error}=await sb.rpc('borrar_usuario',{p_id:id});if(error)throw error;await usuariosDlg();},'add-news':()=>form('Publicar noticia',camposNoticia(null),
 async o=>{const{datos}=await datosNoticia(o);await mut(sb.from('noticias').insert(datos));}),'edit-news':id=>{const n=S.noticias.find(x=>x.id==id);form('Editar noticia',
@@ -1575,7 +1574,7 @@ l:'Fuera de este horario nadie puede ingresar, excepto Formadores y Todopoderoso
 {k:'ini',l:'Abre a las (hora de Perú)',t:'time',req:1},{k:'fin',l:'Cierra a las (hora de Perú)',t:'time',req:1}],async o=>{if(!o.ini||!o.fin)throw new Error('Completa las dos horas.');
 if(o.ini>=o.fin)throw new Error('La hora de apertura debe ser anterior a la de cierre.');const{error}=await sb.rpc('guardar_horario',{p_inicio:o.ini,p_fin:o.fin});
 if(error)throw /guardar_horario/ .test(error.message||'')?new Error('Falta ejecutar el SQL de cambios 09 en Supabase.'):error;await cargarHorario();return()=>alert('Horario actualizado: '+textoHorario().replace('Horario de atención: ',
-'')+'.');},{ini:HORA_INICIO,fin:HORA_FIN});},'orden-menu':()=>ordenMenuDlg(),'ir-sec':id=>{const el=$('#sec-'+id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});},'add-exam':()=>abrirEditor(null,
+'')+'.');},{ini:HORA_INICIO,fin:HORA_FIN});},'cambiar-clave':async()=>{if(await claveDlg(false))alert('Tu contraseña se cambió correctamente.');},'orden-menu':()=>ordenMenuDlg(),'ir-sec':id=>{const el=$('#sec-'+id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});},'add-exam':()=>abrirEditor(null,
 []),'edit-exam':async id=>{const e=S.examenes.find(x=>x.id==id);if(!e)return;const{data,error}=await sb.from('examen_preguntas').select('*').eq('examen_id',
 e.id).order('orden');if(error)throw error;await abrirEditor(e,data);},'pub-exam':async id=>{const e=S.examenes.find(x=>x.id==id);if(!e)return;if(!e.publicado&&!e.n_preguntas)throw new Error('Agrega al menos una pregunta antes de publicar el examen.');
 await mut(sb.from('examenes').update({publicado:!e.publicado}).eq('id',id));await refrescar();},'del-exam':async id=>{const e=S.examenes.find(x=>x.id==id);
@@ -1628,7 +1627,7 @@ if(p.table==='estado_actual'||p.table==='estado_log')return;alCambioTabla(p);}).
 async function entrar(ses){S.uid=ses.user.id;S.sesionId=devIdLeer();S.reemplazada=false;S.cargando=true;S.error='';hechasCargar();S.vista=location.hash.slice(1)||'inicio';document.body.classList.remove('locked');
 dibujar();try{await cargarPerfil();await cargarHorario(true);if(conHorario()&&!enHorario()){motivoSalida=`El portal está fuera de horario. ${textoHorario()}`;
 await sb.auth.signOut({scope:'local'});return;}
-revisarTactil();try{await sb.rpc('registrar_sesion',{p_sesion:S.sesionId});}catch(e){}await iniciarEstado();await cargar();}catch(e){S.error=msg(e);}
+try{const cp=await sb.from('clave_estado').select('pendiente').maybeSingle();if(cp.data&&cp.data.pendiente&&!(await claveDlg(true)))return;}catch(e){}revisarTactil();try{await sb.rpc('registrar_sesion',{p_sesion:S.sesionId});}catch(e){}await iniciarEstado();await cargar();}catch(e){S.error=msg(e);}
 S.cargando=false;if(!veMateriales()&&temaDe(S.vista))S.vista='inicio';if(!abrirDe(S.vista)&&S.cats[0])S.abiertos['cat:'+S.cats[0].id]=true;dibujar();iniciarTiempoReal();
 revisarHorario();if(tieneEstado()){retenerPagina();pedirPantalla();latir();}}
 function salir(){S.uid=null;S.rol=null;S.codigo='';S.nombre='';S.vista='inicio';S.cargando=true;S.error='';S.ultInterv=null;S.accesos=[];S.menu=[];S.cats=[];
@@ -1821,7 +1820,7 @@ const{error}=await sb.from('feriados').upsert({dia:d,nombre:n,tipo:t});if(error)
 feriadosDlg();dibujar();},'fer-del':async id=>{if(!confirm('¿Quitar este feriado?'))return;const{error}=await sb.from('feriados').delete().eq('dia',id);
 if(error)return alert(msg(error));S.ah.feriados.delete(id);feriadosDlg();dibujar();},fichas:()=>fichasDlg(),'ficha-edit':id=>{const p=personalAH().find(x=>x.id===id),
 f=fichaDe(id);form('Ficha · '+(p?(p.nombre||p.codigo):''),[{k:'cargo',l:'Cargo (ej. FORMADOR, FORMADORA)'},{k:'area_trabajo',l:'Área (ej. FIJA MASIVA, BO FIJA)'},
-{k:'id_sap',l:'ID SAP'},{k:'documento',l:'Documento (DNI)'},{k:'usuario_e',l:'Usuario E'},{k:'jefe1',l:'Jefe directo 1'},{k:'jefe2',l:'Jefe directo 2'},
+{k:'id_sap',l:'ID SAP'},{k:'documento',l:'Documento'},{k:'usuario_e',l:'Usuario E'},{k:'jefe1',l:'Jefe directo 1'},{k:'jefe2',l:'Jefe directo 2'},
 {k:'estatus',l:'Estatus',t:'sel',o:['Activo','Cese']},{k:'fecha_ingreso',l:'Fecha de ingreso',t:'date'},{k:'jornada',l:'Tipo de jornada',t:'sel',o:['Full Time',
 'Part Time']},{k:'horas_semana',l:'Horas por semana (meta del horario)',t:'number'},{k:'campana',l:'Campaña'},{k:'tipo',l:'Tipo (ej. Administrativo)'},
 {k:'comp_inicial',l:'Compensados pendientes al empezar (saldo inicial)',t:'number'}],async o=>{const fila={user_id:id,...o,fecha_ingreso:o.fecha_ingreso||null,
@@ -1849,6 +1848,17 @@ dlg.querySelector('[data-reset]').onclick=e=>guardar([],e.currentTarget);
 if(!dlg.open)dlg.showModal();};pintar();}
 function devIdLeer(){try{let d=localStorage.getItem('devId');if(!d){d=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():String(Date.now())+Math.random();localStorage.setItem('devId',d);}return d;}catch(e){return'x';}}
 function cerrarPorReemplazo(){if(!S.uid||S.reemplazada)return;S.reemplazada=true;motivoSalida='Tu usuario inició sesión en otro equipo. Solo se permite una sesión conectada por usuario, por eso esta se cerró.';try{sb.auth.signOut({scope:'local'});}catch(e){}}
+function claveDlg(forzada){return new Promise(resolve=>{const d=document.createElement('dialog');document.body.appendChild(d);const cod=String(S.codigo||'').toLowerCase();
+d.innerHTML=`<div class="dlg"><h3>${forzada?'Crea tu contraseña nueva':'Cambiar mi contraseña'}</h3><p class="note">${forzada?'Por seguridad debes crear una contraseña nueva antes de continuar. Mientras no la crees, tu tiempo no empieza a contar.':'Elige una contraseña nueva. Tus otras sesiones abiertas se cerrarán.'}</p><label>Contraseña nueva<input type="password" id="cl1" autocomplete="new-password"></label><label>Repite la contraseña<input type="password" id="cl2" autocomplete="new-password"></label><label class="chk"><input type="checkbox" id="clv"> Mostrar contraseñas</label><ul class="reglas"><li id="r1">8 caracteres o más</li><li id="r2">Combina letras y números</li><li id="r3">Distinta de la anterior y sin tu código</li><li id="r4">Las dos contraseñas son iguales</li></ul><p class="err" id="clerr" hidden></p><div class="row">${forzada?'<button class="btn ghost" type="button" id="clo">Cerrar sesión</button>':'<button class="btn ghost" type="button" id="clx">Cancelar</button>'}<button class="btn" type="button" id="cls">Guardar contraseña</button></div></div>`;
+const g=id=>d.querySelector('#'+id),v1=()=>g('cl1').value,v2=()=>g('cl2').value;
+const reglas=()=>{const x=v1(),y=v2();const r=[x.length>=8,/[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]/.test(x)&&/[0-9]/.test(x),x.length>0&&(!cod||!x.toLowerCase().includes(cod)),x.length>0&&x===y];r.forEach((ok,i)=>{g('r'+(i+1)).className=ok?'ok':'';});return r.every(Boolean);};
+g('cl1').oninput=reglas;g('cl2').oninput=reglas;g('clv').onchange=e=>{g('cl1').type=g('cl2').type=e.target.checked?'text':'password';};
+const cerrar=ok=>{try{d.close();}catch(e){}d.remove();resolve(ok);};
+d.addEventListener('cancel',e=>{if(forzada)e.preventDefault();else cerrar(false);});
+if(g('clx'))g('clx').onclick=()=>cerrar(false);
+if(g('clo'))g('clo').onclick=async()=>{try{await sb.auth.signOut({scope:'local'});}catch(e){}cerrar(false);};
+g('cls').onclick=async()=>{const er=g('clerr');er.hidden=true;if(!reglas()){er.textContent='Revisa los requisitos de la lista.';er.hidden=false;return;}const b=g('cls');b.disabled=true;const{error}=await sb.rpc('cambiar_mi_clave',{p_nueva:v1()});if(error){er.textContent=msg(error);er.hidden=false;b.disabled=false;return;}cerrar(true);};
+d.showModal();g('cl1').focus();});}
 async function cargarHorario(base){
 if(!sb)return;try{const{data,error}=await sb.from('ajustes').select('*').eq('id',1).maybeSingle();if(!error&&data)aplicarAjustes(data,base);}catch(e){
 }
