@@ -1,29 +1,65 @@
-AMX Programación Servicios Fijos · Centro de Formación
+LICENCIA DE USO — SOFTWARE PROPIETARIO
+Centro de Formación (portal web)
 
-Copyright © 2026 Jhonatan Morzán. Todos los derechos reservados.
+Copyright (c) 2026 Jhonatan Morzán. Todos los derechos reservados.
 
-1. Titularidad.
-Este software, su código fuente, su diseño y su documentación pertenecen a
-Jhonatan Morzán (el «Titular»). Que el código esté visible o descargable en un
-repositorio no transfiere ningún derecho sobre él.
+1. TITULARIDAD
+El software "Centro de Formación" —incluido su código fuente y compilado, su
+diseño, estructura de base de datos, funciones, textos de interfaz, documentación
+y versiones futuras (en adelante, "el Software")— fue concebido y desarrollado
+por iniciativa propia de Jhonatan Morzán (en adelante, "el Autor"), quien es su
+titular. El uso del Software por terceros no transfiere ni cede ningún derecho de
+propiedad intelectual sobre él.
 
-2. Derechos reservados.
-No se otorga licencia para copiar, modificar, distribuir, sublicenciar, vender,
-alojar en otros servidores ni crear obras derivadas de este software, ni total ni
-parcialmente, sin autorización escrita previa del Titular.
+2. PERMISO DE USO
+El Autor puede permitir, a su sola decisión, que una organización o un equipo
+utilice el Software para fines internos de formación (en adelante, "el Usuario").
+Ese permiso:
+  a) es gratuito, temporal, no exclusivo, intransferible y no sublicenciable;
+  b) se limita al uso del Software tal como el Autor lo pone a disposición;
+  c) puede ser modificado, suspendido o retirado por el Autor en cualquier
+     momento, sin que ello genere compensación alguna.
 
-3. Uso autorizado para HITSS.
-El Titular autoriza a HITSS a usar la aplicación ya publicada, únicamente para la
-formación interna de su personal y mientras el Titular la mantenga disponible, en
-los términos que el Titular y HITSS acuerden por escrito. Esta autorización no
-transfiere la titularidad ni el código fuente, y puede terminar conforme a lo que
-se acuerde.
+3. QUEDA PROHIBIDO, sin autorización previa y por escrito del Autor:
+  a) copiar, reproducir, replicar o clonar el Software, total o parcialmente;
+  b) modificar, adaptar, traducir o crear obras derivadas;
+  c) descompilar, desofuscar o aplicar ingeniería inversa;
+  d) distribuir, publicar, vender, alquilar o ceder el Software a terceros;
+  e) reconstruir su funcionamiento, diseño o estructura en otra plataforma;
+  f) retirar o alterar los avisos de autoría y de derechos reservados.
 
-4. Sin garantía.
-El software se entrega «tal cual», sin garantías de ningún tipo, expresas o
-implícitas. El Titular no responde por daños derivados de su uso, salvo lo que
-disponga el acuerdo escrito mencionado o la ley aplicable.
+4. SIN GARANTÍA
+El Software se ofrece "TAL CUAL", sin garantías de ningún tipo, expresas o
+implícitas, incluidas las de funcionamiento continuo, ausencia de errores,
+disponibilidad o idoneidad para un propósito determinado.
 
-5. Otras autorizaciones.
-Cualquier uso distinto de los descritos requiere solicitar autorización escrita al
-Titular.
+5. SIN OBLIGACIÓN DE SOPORTE
+El Autor no está obligado a brindar mantenimiento, soporte, correcciones,
+actualizaciones ni nuevas funciones. Cualquier mejora que realice es voluntaria
+y no crea un compromiso a futuro.
+
+6. LIMITACIÓN DE RESPONSABILIDAD
+En la medida permitida por la ley, el Autor no será responsable por daños,
+pérdidas de información, interrupciones o perjuicios derivados del uso o de la
+imposibilidad de uso del Software.
+
+7. DATOS Y CONTENIDOS
+La información y los contenidos que el Usuario cargue en el Software (noticias,
+materiales, exámenes, registros, datos de personal) pertenecen a sus respectivos
+titulares. Esta licencia protege el Software, no esa información. Al terminar el
+permiso de uso, el Autor podrá facilitar, a su criterio, una exportación de dichos
+datos.
+
+8. TERMINACIÓN
+El permiso de uso termina cuando el Autor así lo comunique o cuando se incumpla
+cualquiera de estas condiciones. Al terminar, el Usuario deberá dejar de usar el
+Software y no conservar copias del mismo.
+
+9. AVISOS
+Los avisos "© Jhonatan Morzán" y "Todos los derechos reservados" que figuran en
+el Software forman parte de esta licencia y deben mantenerse visibles.
+
+Para solicitar autorizaciones o consultas sobre esta licencia, contactar al Autor.
+
+Jhonatan Morzán
+2026
