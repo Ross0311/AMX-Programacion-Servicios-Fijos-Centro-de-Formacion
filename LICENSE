@@ -43,12 +43,37 @@ En la medida permitida por la ley, el Autor no será responsable por daños,
 pérdidas de información, interrupciones o perjuicios derivados del uso o de la
 imposibilidad de uso del Software.
 
-7. DATOS Y CONTENIDOS
-La información y los contenidos que el Usuario cargue en el Software (noticias,
-materiales, exámenes, registros, datos de personal) pertenecen a sus respectivos
-titulares. Esta licencia protege el Software, no esa información. Al terminar el
-permiso de uso, el Autor podrá facilitar, a su criterio, una exportación de dichos
-datos.
+7. DATOS, CONFIDENCIALIDAD Y DEVOLUCIÓN
+7.1 Titularidad de los datos. Toda la información que el Usuario y su personal
+    registren en el Software —noticias, materiales, exámenes y resultados,
+    asistencia, horarios, fichas y datos del personal, registros de actividad y
+    cualquier información de clientes— (en adelante, "los Datos") pertenece al
+    Usuario o a sus respectivos titulares. El Autor no adquiere ningún derecho
+    sobre los Datos. Esta licencia protege el Software, no los Datos.
+7.2 Confidencialidad. El Autor tratará los Datos como información confidencial:
+    no los divulgará, copiará ni usará para fines distintos del funcionamiento
+    del Software, y solo accederá a ellos cuando sea necesario para operarlo o
+    cuando el Usuario lo solicite. Esta obligación continúa después de terminado
+    el permiso de uso.
+7.3 Medidas de seguridad. El Autor mantendrá medidas razonables para proteger
+    los Datos, entre ellas el acceso con usuario y contraseña, permisos por rol
+    controlados por el servidor, cifrado de los datos sensibles y registro de
+    accesos.
+7.4 Datos personales. Respecto de los datos personales, el Usuario es el titular
+    del banco de datos y el Autor actúa únicamente como encargado técnico de su
+    tratamiento, conforme a la Ley N.º 29733, Ley de Protección de Datos
+    Personales, y su reglamento.
+7.5 Minimización. Se recomienda registrar en el Software solo la información
+    estrictamente necesaria. La información de clientes de terceros se registrará
+    únicamente en la medida en que el Usuario lo autorice.
+7.6 Devolución y eliminación. Al terminar el permiso de uso por cualquier causa,
+    o antes si el Usuario lo solicita por escrito, el Autor:
+      a) entregará al Usuario una copia completa de los Datos en formato
+         estándar (Excel o CSV) dentro de los quince (15) días hábiles
+         siguientes; y
+      b) una vez confirmada la entrega, eliminará los Datos de la plataforma y
+         de los respaldos bajo su control, y lo comunicará por escrito.
+    La devolución de los Datos no implica la entrega ni la cesión del Software.
 
 8. TERMINACIÓN
 El permiso de uso termina cuando el Autor así lo comunique o cuando se incumpla
